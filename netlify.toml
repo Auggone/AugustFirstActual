@@ -1,4 +1,18 @@
+# The blog app lives in client/. Netlify changes into `base` before building,
+# and `publish` is relative to that base (so client/build is published).
+[build]
+  base = "client"
+  command = "npm run build"
+  publish = "build"
+
+# Netlify sets CI=true, which makes Create React App treat lint warnings
+# (unused imports etc.) as build-breaking errors. Match local behavior:
+# warnings stay warnings, they don't fail the deploy.
+[build.environment]
+  CI = "false"
+
+# SPA fallback: serve index.html for client-side routes (react-router-dom).
 [[redirects]]
-from = "/*"
-to = "/index.html"
-status = 200
+  from = "/*"
+  to = "/index.html"
+  status = 200
