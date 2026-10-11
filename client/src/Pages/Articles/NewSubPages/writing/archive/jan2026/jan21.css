@@ -1,0 +1,47 @@
+.sentence {
+  font-size: 18px;
+  line-height: 1.6;
+  text-align: center;
+  margin-top: 0px;
+}
+
+.img {
+  display: inline-block;
+  height: 28em;
+  vertical-align: middle;
+}
+
+.img2 {
+  display: inline-block;
+  height: 15em;
+  vertical-align: middle;
+}
+
+.youtube {
+  text-align: center;
+  margin-bottom: 2em;
+}
+
+
+@media (max-width: 768px) {
+
+  .img {
+    display: inline-block;
+    height: 20em;
+    vertical-align: middle;
+  }
+
+  .img2 {
+    display: block;        /* block allows margin: auto to work */
+    width: 100%;            /* fills most of the screen width */
+    max-width: 100%;       /* never overflows the screen */
+    height: auto;          /* preserves aspect ratio */
+    margin: 0 auto;        /* centers it horizontally */
+  }
+
+  .youtube {
+    text-align: center;
+    margin-bottom: 2em;
+  }
+
+}

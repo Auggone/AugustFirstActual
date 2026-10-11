@@ -1,0 +1,226 @@
+/*THIS IS THE MOST BASIC DESIGN POSSIBLE. I WILL WORK ON THE DESKTOP VERSION LATER, BUT FOR NOW I WANT THE MOBILE ONE TO BE THE BEST SINCE MOST PEOPLE WILL ACCESS FROM THEIR PHONES*/
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+:root{
+  --bg: white;
+  --ink: #0d0e10;
+  --gap: 10px;
+  --stroke: 3px;
+  --row-h: 30px;
+}
+
+/* Page wrapper - SIMPLIFIED FOR MOBILE */
+.parent-grid{
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: flex-start;
+  padding: 0;
+  margin: 0;
+}
+
+/* Base */
+body{
+  margin: 0;
+  background: var(--bg); /**/
+}
+
+/* ====== MOBILE-FIRST GRID - CENTERED COLUMN ====== */
+.content-grid{
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--gap);
+  width: 90%; /* Takes 90% of screen width, centered */
+  max-width: 500px; /* Don't get too wide on bigger phones */
+  padding: var(--gap) 0;
+  
+}
+
+/* Cells */
+.box{
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: var(--row-h);
+}
+
+/* Use background image instead of regular <img> */
+.box-bg {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  flex: 1;
+
+}
+
+/* Out of the flow entirely: nothing shifts when this moves, and it takes up
+   no space in the grid. Positioned against the window — change top/left to
+   put it wherever you like (use `bottom`/`right` instead to anchor from the
+   opposite edge). Swap `fixed` for `absolute` if you want it to scroll away
+   with the page instead of staying put. */
+.archive-button {
+  position: fixed;
+  top: 25%;
+  left: 22%;
+  z-index: 10;
+  background: transparent;
+  border: none;
+  font-family: titleFont, Garamond, serif; /* matches the card subtitles */
+  font-size: medium;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+/* Phones: there is no side margin left to sit in, so 22% would land the
+   button on top of the cards. Float it clear of the column instead. */
+@media (max-width: 768px) {
+  .archive-button {
+    top: auto;
+    color: black;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 22px; /* a thumb-sized tap target */
+    background: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+  }
+}
+
+/* The archive's counterpart to the Archive button. nowrap keeps the arrow
+   and the word on one line — as a narrow flex item it wraps otherwise. */
+.archive-back {
+  white-space: nowrap;
+  color: inherit;
+  text-decoration: none;
+  font-family: titleFont, Garamond, serif;
+  font-size: medium;
+  letter-spacing: 1px;
+}
+
+/* A markdown post with no `cover` in its front matter */
+.box-bg-empty {
+  background: repeating-linear-gradient(
+    -45deg,
+    #f2f2f2,
+    #f2f2f2 10px,
+    #ebebeb 10px,
+    #ebebeb 20px
+  );
+}
+
+.subtitle{ 
+  font-size: medium;
+  white-space: pre-line;
+}
+
+
+/* Filter column mode */
+.content-grid.column-mode .box{
+  height: 260px;
+}
+
+/* Small reset */
+nav, header,
+h1, h2, h3, h4, h5, h6,
+p, ul, li{
+  margin: 0;
+  padding: 0;
+}
+ul{ list-style: none; }
+
+
+/* ====== PHONE: stack instead of squeezing into one row ======
+   .parent-grid is a flex row, so on a narrow screen the nav, the social
+   links and the card grid fight for the same 390px: the nav gets pushed off
+   the left edge and the grid off the right, where overflow-x: hidden on body
+   silently clips it. Stacking gives each one the full width. */
+@media (max-width: 768px){
+  .parent-grid{
+    flex-direction: column;
+    align-items: center;
+    margin-top: -30px;
+    /* The base rule centres on the main axis, which is now vertical — that
+       would push everything to the middle of a 100vh box. */
+    justify-content: flex-start;
+    min-height: 0;
+    gap: var(--gap);
+  }
+
+  .content-grid{
+    width: 90%;
+  }
+}
+
+/* ====== TABLET: 2-COLUMN LAYOUT ====== */
+@media (min-width: 1200px){
+  .content-grid{
+    display: grid;
+    /* The writing page holds one card: a single centred 500px column, rather
+       than a half-width card stranded in the left half of a 2-col grid. */
+    grid-template-columns: 500px;
+    justify-content: center;
+    /* --row-h is only a floor: rows grow to whatever the card needs, or
+       260px cards pile on top of each other in 30px tracks. */
+    grid-auto-rows: minmax(var(--row-h), auto);
+    width: 95%;
+    max-width: none;
+
+  }
+
+  /* The archive has enough cards to earn the 2-column layout. */
+  .content-grid--archive{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-content: stretch;
+  }
+}
+
+/* ====== DESKTOP: 4-COLUMN GRID ====== */
+@media (min-width: 2000px){
+  .parent-grid{
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .content-grid{
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    /* --row-h is only a floor: rows grow to whatever the card needs, or
+       260px cards pile on top of each other in 30px tracks. */
+    grid-auto-rows: minmax(var(--row-h), auto);
+    width: 100%;
+    max-width: none;
+    
+
+
+  }
+
+  /*
+  .left-top    { grid-column: 1; grid-row: 1; }
+  .left-bottom { grid-column: 1; grid-row: 2; }
+  .center-tall { grid-column: 2; grid-row: 1 / span 2; }
+  .right-top   { grid-column: 3; grid-row: 1; }
+  .right-top-n { grid-column: 4; grid-row: 1; }
+  .bottom-wide { grid-column: 3 / span 2; grid-row: 2; }
+
+  .box--hero { grid-column: span 4; grid-row: span 2; }
+  .box--halfHero { grid-column: span 2; grid-row: span 2; }
+  .box--wide { grid-column: span 2; grid-row: span 1; }
+  .box--tall { grid-column: span 1; grid-row: span 2; }
+  .box--horiz { grid-column: span 4; grid-row: span 1
+  
+  These are grid components to build that old fancy version of the site that I wanted 
+  
+  */
+
+  
+}

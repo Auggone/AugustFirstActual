@@ -1,0 +1,276 @@
+/* src/markdown/markdown.css — styling for posts written as markdown */
+
+.md-post {
+  position: relative; /* anchor for the back link above the title */
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 18px;
+  line-height: 1.6;
+  padding-bottom: 2em;
+}
+
+/* Prose is centred to match the rest of the writing on this site.
+   Put `align: left` in a post's front matter to switch it off. */
+.md-align-center .md-paragraph,
+.md-align-center .md-heading,
+.md-align-center .md-media-row,
+.md-align-center .md-post-header {
+  text-align: center;
+}
+
+.md-align-left .md-paragraph,
+.md-align-left .md-heading,
+.md-align-left .md-post-header {
+  text-align: left;
+}
+
+/* Header ------------------------------------------------------------ */
+
+/* Lifted out of the flow so it does not push the title down. The 60px gap
+   between the header rule and the post is fixed (the 50px spacer in
+   ArticleStyle plus main's 10px padding), so -84px lands the link's baseline
+   on the rule under "August First" whatever size the header is. */
+.md-post-back {
+  position: absolute;
+  top: -84px;
+  right: 100%; /* right edge on the text column's left edge, so the final
+                  "g" lines up with the body text */
+  margin: 0;
+  white-space: nowrap;
+  text-align: right;
+  font-size: 0.95rem;
+}
+
+/* Once the window is narrow enough that the margin cannot hold the link,
+   bring it back inside the column instead of letting it run off-screen. */
+@media (max-width: 1100px) {
+  .md-post-back {
+    right: auto;
+    left: 0;
+    text-align: left;
+  }
+}
+
+.md-post-back a {
+  color: inherit;
+}
+
+.md-post-header {
+  margin-bottom: 2em;
+}
+
+.md-post-title {
+  font-family: titleFont, Georgia, serif;
+  font-size: 2.2rem;
+  font-weight: bold;
+  line-height: 1.15;
+  margin: 0 0 0.25em;
+}
+
+.md-post-date {
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  opacity: 0.55;
+  margin: 0;
+}
+
+.md-post-footer {
+  margin-top: 3em;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.md-post-footer a,
+.md-status a {
+  color: inherit;
+}
+
+.md-status {
+  text-align: center;
+  padding: 3em 1em;
+  opacity: 0.7;
+}
+
+/* Body --------------------------------------------------------------- */
+
+.md-paragraph {
+  margin: 0 0 1.4em;
+}
+
+.md-heading {
+  font-family: titleFont, Georgia, serif;
+  font-weight: bold;
+  line-height: 1.2;
+  margin: 1.8em 0 0.6em;
+}
+
+.md-body > .md-heading:first-child {
+  margin-top: 0;
+}
+
+h1.md-heading { font-size: 1.9rem; }
+h2.md-heading { font-size: 1.55rem; }
+h3.md-heading { font-size: 1.3rem; }
+h4.md-heading,
+h5.md-heading,
+h6.md-heading { font-size: 1.1rem; }
+
+.md-body a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+
+/* Media -------------------------------------------------------------- */
+
+/* Images stay centred whichever way the prose runs. */
+.md-media-row {
+  margin: 1.6em 0;
+  text-align: center;
+}
+
+/* A paragraph containing an image is a figure — its caption centres with the
+   picture. Listed under both alignments to outrank the .md-align-* rules. */
+.md-align-left .md-figure,
+.md-align-center .md-figure {
+  text-align: center;
+}
+
+.md-figure .md-image {
+  margin-bottom: 0.5em;
+}
+
+/* Block with auto margins, so an image centres itself even inside a
+   left-aligned paragraph — e.g. a photo with a caption under it. */
+.md-image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+  max-height: 30em;
+  height: auto;
+}
+
+.md-audio {
+  display: block;
+  margin: 1.6em auto;
+  max-width: 320px;
+}
+
+.md-audio-title {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 0.4em;
+}
+
+.md-audio audio {
+  width: 100%;
+}
+
+/* Lists, quotes, code, tables — left aligned, they read badly centred -- */
+
+.md-list {
+  text-align: left;
+  margin: 0 0 1.4em;
+  padding-left: 1.4em;
+  display: inline-block;
+}
+
+.md-align-left .md-list {
+  display: block;
+}
+
+.md-list-item {
+  margin-bottom: 0.4em;
+}
+
+.md-list .md-list {
+  margin: 0.4em 0 0;
+}
+
+.md-quote {
+  text-align: left;
+  margin: 1.6em 0;
+  padding: 0.2em 0 0.2em 1.1em;
+  border-left: 3px solid currentColor;
+  opacity: 0.85;
+  font-style: italic;
+}
+
+.md-quote .md-paragraph:last-child {
+  margin-bottom: 0;
+}
+
+.md-code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-size: 0.9em;
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+}
+
+.md-pre {
+  text-align: left;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  padding: 1em;
+  margin: 0 0 1.4em;
+  overflow-x: auto;
+}
+
+.md-pre code {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  background: none;
+  padding: 0;
+}
+
+.md-hr {
+  border: none;
+  border-top: 1px solid currentColor;
+  opacity: 0.25;
+  margin: 2.5em auto;
+  width: 40%;
+}
+
+.md-table-wrap {
+  overflow-x: auto;
+  margin: 0 0 1.4em;
+}
+
+.md-table {
+  border-collapse: collapse;
+  text-align: left;
+  width: 100%;
+  font-size: 0.95rem;
+}
+
+.md-table th,
+.md-table td {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 0.5em 0.7em;
+}
+
+.md-table th {
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .md-post {
+    font-size: 17px;
+  }
+
+  /* Back in the flow on narrow screens, where it would otherwise sit on
+     top of the centred "August First" logo. */
+  .md-post-back {
+    position: static;
+    margin-bottom: 1.5em;
+  }
+
+  .md-post-title {
+    font-size: 1.7rem;
+  }
+
+  .md-image {
+    max-height: 20em;
+  }
+}

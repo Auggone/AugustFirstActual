@@ -1,0 +1,30 @@
+.image {
+
+    
+          position: fixed;
+          right: 25%;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 400px;
+          height: 400px;
+          object-fit: cover;
+        
+}
+
+
+@media (max-width: 768px)
+
+{
+    .image{
+        background-color: black;
+        position: static;
+          right: 5%;
+          top: 50%;
+          transform: translateY(10%);
+          width: 200px;
+          height: 200px;
+          object-fit: cover;
+    }
+
+
+}

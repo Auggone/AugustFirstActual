@@ -1,0 +1,23 @@
+@font-face {
+  font-family: titleFont;
+  src: url("../../fonts/romanabt_roman.otf") format("opentype"); /*alright, fonts are imported correctly*/
+}
+
+.nav{
+          display:flex;
+          justify-content:center;
+          align-items:center;
+          gap:12px;
+          padding:12px 16px;
+          
+        }
+        .nav button{
+          background:none;
+          border:0;
+          color:black;
+          padding:8px 12px;
+          cursor:pointer;
+          font-family: titleFont;
+          font-weight: bold;
+          font-size: large;
+        }

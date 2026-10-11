@@ -1,0 +1,180 @@
+.gallery-page {
+  /* fill the viewport below the header (~130px) without forcing a scrollbar */
+  min-height: calc(100vh - 130px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+/* Single featured image + caption — centered, fit to the screen */
+.gallery-figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.gallery-featured {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: calc(100vh - 200px);
+  object-fit: contain;
+}
+
+.gallery-caption {
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  color: #666;
+  text-align: center;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 52px;
+  padding: 44px 0;
+}
+
+/* Fan container */
+.fan {
+  position: relative;
+  width: 240px;
+  height: 210px;
+  cursor: pointer;
+}
+
+/* Individual cards inside a fan */
+.fan-card {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  margin-left: -58px;
+  width: 116px;
+  height: 178px;
+  border-radius: 11px;
+  border: 0.5px solid #ccc;
+  transform-origin: bottom center;
+  transition: transform 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5;
+}
+
+.fan-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Resting fan positions */
+.fc-l { transform: rotate(-21deg); z-index: 1; }
+.fc-m { transform: rotate(0deg);   z-index: 3; }
+.fc-r { transform: rotate(21deg);  z-index: 2; }
+
+/* Spread on hover */
+.fan:hover .fc-l { transform: rotate(-30deg); }
+.fan:hover .fc-r { transform: rotate(30deg); }
+
+.card-placeholder {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: #aaa;
+}
+
+/* Overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.58);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  z-index: 300;
+}
+
+/* Expanded 3-card row */
+.expanded-row {
+  display: grid;
+  grid-template-columns: repeat(3, 160px);
+  gap: 24px;
+  align-items: center;
+}
+
+.expanded-card {
+  width: 160px;
+  height: 240px;
+  border-radius: 12px;
+  border: 0.5px solid rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e0e0e0;
+  animation: popIn 0.4s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+}
+
+.expanded-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.5); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+.close-hint {
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+}
+
+@media (max-width: 768px) {
+  /* Featured image on phones: header is shorter and nav is hidden,
+     so give the image nearly the full screen while still showing all of it */
+  .gallery-page {
+    min-height: calc(100vh - 90px);
+    padding: 10px;
+  }
+
+  .gallery-featured {
+    max-width: 100%;
+    max-height: calc(100vh - 150px);
+  }
+
+  .gallery {
+    grid-template-columns: 1fr; /* stack to 1 column on mobile */
+    gap: 32px;
+  }
+
+  .fan {
+    width: 180px;
+    height: 160px;
+  }
+
+  .fan-card {
+    width: 90px;
+    height: 140px;
+    margin-left: -45px;
+  }
+
+  .expanded-card {
+    grid-template-columns: 1fr;
+    width: 100px;
+    height: 160px;
+  }
+}

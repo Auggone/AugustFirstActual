@@ -1,0 +1,94 @@
+@font-face {
+  font-family: titleFont;
+  src: url("./fonts/romanabt_roman.otf") format("opentype");
+}
+
+.coverImage2{
+  overflow-y: visible;
+  
+  
+}
+
+main{
+  padding: 10px;
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+
+.cover{
+  position: static;
+  top: auto;
+  margin-top: 3vh;
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+}
+
+.cover a{ /*FYI, the "a" in the class just means that this is styling the <a> anchor attribute within the class, so this is just styling for the link*/
+  text-decoration: none;
+  font-size: xx-large;
+  color: black;
+  font-family: titleFont;
+}
+
+.subtitle{
+  font-family: titleFont;
+  font-size: medium;
+  font-style: bold;
+  letter-spacing: 1px;
+}
+
+div.entry{
+  position:relative;
+  top: auto;
+  display: grid;
+  margin-top: 100vh;
+  grid-template-columns: 0.9fr 1.2fr; 
+  gap: 20px;
+  border: 1px solid black;
+  padding: 10px;
+  
+}
+
+div.entry img{
+  height: auto;
+}
+
+
+div.Date{
+  position: relative;
+  top: 66px;
+}
+
+
+div.entry div.texts h2{
+  margin: 0px;
+  padding-top: 50px;
+  font-size: 1.5rem;
+}
+
+
+form.login, form.register{
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+
+input{
+  display: block;
+  margin: 5px;
+  max-width: 100%;
+  padding: 5px;
+  border: 10px grey;
+  background-color: white;
+}
+
+
+@media (max-width: 600px){
+  .cover{
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+}
