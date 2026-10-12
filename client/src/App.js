@@ -1,8 +1,6 @@
 // src/App.js
 import './App.css';
 import './Pages/Articles/articles.css';
-import Layout from './layout';
-import HomePage from './homePage';
 import ArticlePage from './Pages/Articles/articlepage';
 import ArticlePage2 from './Pages/Articles/article2page';
 import ArticlePage3 from './Pages/Articles/article3page';
@@ -12,30 +10,40 @@ import Jan21 from './Pages/Articles/NewSubPages/writing/archive/jan2026/jan21';
 import Jan26 from './Pages/Articles/NewSubPages/writing/archive/jan2026/jan26';
 import WritingPage from './Pages/Articles/NewSubPages/writing/archive/jan2026/jan26';
 import MarkdownPost from './Pages/Articles/NewSubPages/writing/MarkdownPost';
-import ArchivePage from './Pages/Articles/NewSubPages/writing/archive/archivePage';
 import { GridProvider } from './animation'; 
 import ArticleStyle from './components/articlestyle/article';
 
 
-import { Route, Routes } from 'react-router-dom';
-import NewHomePage from './Pages/Articles/NewHomePage/newhome';
-import GalleryPage from './components/gallarydesigns/gallaryD';
-import VideoPage from './Pages/Articles/NewSubPages/videos/videopage';
-import MusicPage from './Pages/Articles/NewSubPages/music/musicpage';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import HomePageV2 from './Pages/HomePageV2/homev2';
+import GalleryV2 from './Pages/V2/GalleryV2';
+import VideoV2 from './Pages/V2/VideoV2';
+import WritingV2, { WritingArchiveV2 } from './Pages/V2/WritingV2';
+import MusicV2 from './Pages/V2/MusicV2';
+
+// The pages used to be built at /v2/...; those links now go to the real addresses
+function FromV2() {
+  const { pathname } = useLocation();
+  return <Navigate to={pathname.replace(/^\/v2/, "") || "/"} replace />;
+}
 
 function App() {
   return (
     <GridProvider>                     {/* ← NOW AT THE TOP */}
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<NewHomePage/>} />
-          <Route path="gallery" element={<GalleryPage />} />
-          <Route path="video" element={<VideoPage />} />
-          <Route path="music" element={<MusicPage />} />
-        </Route>
+        {/* The site: each page has its own colors in the shared pastel frame
+            (components/pastelFrame) */}
+        <Route path="/" element={<HomePageV2 />} />
+        <Route path="gallery" element={<GalleryV2 />} />
+        <Route path="video" element={<VideoV2 />} />
+        <Route path="writing" element={<WritingV2 />} />
+        <Route path="writing/archive" element={<WritingArchiveV2 />} />
+        <Route path="music" element={<MusicV2 />} />
+        <Route path="v2/*" element={<FromV2 />} />
+        <Route path="v2" element={<FromV2 />} />
+
+        {/* Articles keep their own reading layout for now */}
         <Route path = "/" element={<ArticleStyle />}>
-              <Route path="writing" element={<HomePage /> }/>
-              <Route path="writing/archive" element={<ArchivePage />} />
               <Route path = "articles/jan13" element = {<Jan13/>} />
               <Route path = "articles/jan20" element = {<Jan21/>} />
               <Route path ="articles/jan06" element = {<Jan06/>} />

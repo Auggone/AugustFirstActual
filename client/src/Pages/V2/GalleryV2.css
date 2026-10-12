@@ -1,0 +1,16 @@
+/* Pages/V2/GalleryV2.css */
+
+/* The photo is exactly as wide as the "August First" title and its underline
+   (--frame-title-width, measured by PastelFrame); its height follows its shape */
+.frame-media .gallery-featured {
+  width: var(--frame-title-width, 430px);
+  max-width: 100%;
+  height: auto;
+  max-height: none;
+}
+
+/* The caption takes the page's text color, faded (its grey is faint on green) */
+.frame-media .gallery-caption {
+  color: inherit;
+  opacity: 0.7;
+}

@@ -28,7 +28,7 @@ export default function MusicPage() {
           />
         ) : (
           <div className="music-placeholder">
-            mp4 coming soon
+            mp3 coming soon
           </div>
         )}
       </div>

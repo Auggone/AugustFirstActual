@@ -7,22 +7,19 @@ import oroborous from "../../../assets/oroborus.jpg";
 import NavBarTwo from "./navbartwo.js";
 import SocialLinks from "../../../components/links/links.js";
 import PinkTree from "../../../assets/pinktree.jpg";
-import AudioPlayer from "../../../components/audioplayer/audioplayer.js";
-import Wayne from "../../../assets/letitallworkout.mp3";
+import FeatureSlot from "../../../features/FeatureSlot";
 
 export default function NewHomePage() {
   return (
     <main className="page-wrapper">
 
-      <div className="audio-corner">
-        <AudioPlayer src = {Wayne} title = "Let It All Work Out"/>
-        </div>
+      <FeatureSlot name="home-corner" />
 
       {/* Mobile-only nav stack — hidden on desktop via CSS */}
       <div className="mobile-nav-stack">
         <NavBarTwo />
         <SocialLinks />
-        <AudioPlayer src = {Wayne} title = "Let It All Work Out"/>
+        <FeatureSlot name="home-mobile-nav" />
       </div>
 
       <section className="recent-section">

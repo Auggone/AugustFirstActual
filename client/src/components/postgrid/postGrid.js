@@ -8,7 +8,9 @@ import Links from "../links/links";
 import NavBarTwo from "../../Pages/Articles/NewHomePage/navbartwo";
 import "../../homePage.css";
 
-export default function PostGrid({ boxes, applyFilter = true, variant, children }) {
+// withNav: the old pages draw the menu and social links here; the v2 pages
+// already have them in their frame, so they pass withNav={false}
+export default function PostGrid({ boxes, applyFilter = true, variant, withNav = true, children }) {
   const { filter } = useGridControls(); // Read filter from context
   const isColumnMode = filter !== "all";
 
@@ -24,8 +26,8 @@ export default function PostGrid({ boxes, applyFilter = true, variant, children 
       {children}
 
       <LayoutGroup>
-      <NavBarTwo />
-      <Links />
+      {withNav && <NavBarTwo />}
+      {withNav && <Links />}
         <div
           layout
           className={`content-grid ${isColumnMode ? "column-mode" : ""} ${variant ? `content-grid--${variant}` : ""}`}

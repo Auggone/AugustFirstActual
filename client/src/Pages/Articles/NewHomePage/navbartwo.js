@@ -4,11 +4,12 @@ import "./navbartwo.css";
 
 const NAV_ITEMS = ["Gallery", "Video", "Writing", "Music"];
 
-export default function NavBarTwo() {
+// base: path the links start from (e.g. "/v2" sends Gallery to /v2/gallery)
+export default function NavBarTwo({ base = "" }) {
   return (
     <nav className="sidebar">
       {NAV_ITEMS.map((item) => (
-        <Link key={item} to={`/${item.toLowerCase()}`} className="sidebar-item">
+        <Link key={item} to={`${base}/${item.toLowerCase()}`} className="sidebar-item">
           {item}
         </Link>
       ))}

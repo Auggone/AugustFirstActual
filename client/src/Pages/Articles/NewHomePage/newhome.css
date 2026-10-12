@@ -201,13 +201,6 @@ body {
   letter-spacing: 0.04em;
 }
 
-.audio-corner {
-  position: fixed;
-  top: 16px;
-  right: 20px;
-  z-index: 100;
-  font-size: small;
-}
 
 
 
@@ -320,10 +313,6 @@ body {
     gap: 8px;
   }
 
-  /*Get rid of play button in the top right*/
-  .audio-corner {
-  display: none;
-}
 
 
 .audio-player {

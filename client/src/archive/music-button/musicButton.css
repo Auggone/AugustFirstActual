@@ -1,0 +1,14 @@
+.audio-corner {
+  position: fixed;
+  top: 16px;
+  right: 20px;
+  z-index: 100;
+  font-size: small;
+}
+
+@media (max-width: 768px) {
+  /* Mobile uses the play button in the nav stack instead */
+  .audio-corner {
+    display: none;
+  }
+}

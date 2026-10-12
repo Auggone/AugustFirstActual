@@ -14,9 +14,6 @@
   max-width: 860px;
   aspect-ratio: 16 / 9;
   margin: 0 auto;
-  border-color: red;
-  border-width: 2px;
-  border-style: solid;
   overflow: hidden;
 }
 
@@ -67,7 +64,8 @@
   padding: 1rem;
   font-size: 0.95rem;
   letter-spacing: 0.04em;
-  color: #888;
+  color: inherit;   /* the page's text color, faded */
+  opacity: 0.7;
 }
 
 @media (max-width: 480px) {
@@ -79,6 +77,5 @@
 
   .music-wrapper {
     max-width: 100%;
-    border-width: 1px;
   }
 }

@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
 import './header.css'
 
-export default function Header(){
+// to: where the title links
+export default function Header({ to = "/" }){
 
 
     return (
         <header>
 
-        <Link to = "/" className = "logo">August First  </Link>
+        <Link to = {to} className = "logo">August First  </Link>
         
         
         

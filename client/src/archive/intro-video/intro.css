@@ -1,0 +1,45 @@
+/* The video sits over the background until the click */
+.intro-video {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  cursor: pointer;
+  opacity: 1;
+}
+
+.intro-video:focus-visible {
+  outline: 2px solid #f2ebdd;
+  outline-offset: -6px;
+}
+
+/* Pastel melts itself (see pastel-video.js); this just lets clicks through */
+.intro-video.is-melting {
+  pointer-events: none;
+}
+
+/* The halftone and plain looks fade out instead */
+.intro-video.is-fading {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.8s ease;
+}
+
+.intro-video-effect,
+.intro-video-plain {
+  width: 100%;
+  height: 100%;
+}
+
+.intro-video-plain {
+  display: block;
+  object-fit: cover;
+}
+
+/* Less motion: no melt, just a quick fade */
+@media (prefers-reduced-motion: reduce) {
+  .intro-video.is-melting,
+  .intro-video.is-fading {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+}

@@ -1,0 +1,207 @@
+/* components/pastelFrame/PastelFrame.css
+   The shared frame for the v2 pages: pulsing background, pinned title, menu
+   and social links, and the phone edge-to-edge setup. */
+
+/* App.css caps every <main> at 800px with padding; the frame runs edge to edge */
+main.frame-page {
+  --frame-left: 48px; /* left edge shared by the menu and the social links (they form an L) */
+  position: relative;
+  max-width: none;
+  padding: 0;
+  margin: 0;
+  /* screens (PastelFrame prop) sets how many screens long the page is */
+  min-height: calc(var(--frame-screens, 1) * 100vh);
+  background: var(--frame-edge); /* the page's edge color, in case the background hasn't drawn yet */
+}
+
+/* The pulsing background is part of the page, so it scrolls with the media */
+.frame-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* The page, on top of the background. With the intro, it fades in as the
+   melt begins; without it, it's simply there from the start.
+   Opacity only (no transform), so the pinned pieces stay pinned to the screen. */
+.frame-content {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  min-height: 100svh;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 2.6s ease 0.6s;
+}
+
+/* Title, menu and icons take the page's ink color (PastelFrame's ink prop) */
+.frame-content {
+  color: var(--frame-ink, #000);
+}
+
+.frame-top,
+.frame-social {
+  text-shadow: var(--frame-ink-shadow, none);
+}
+
+/* The icons are shapes, not text, so they take the shadow as a filter
+   (with no shadow set, "drop-shadow(none)" is ignored) */
+.frame-social svg {
+  filter: drop-shadow(var(--frame-ink-shadow, none));
+}
+
+/* header.css draws the title's underline in black; here it follows the ink */
+.frame-top header a.logo {
+  border-bottom-color: currentColor;
+}
+
+.frame-content.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Pinned to the screen: the title and menu at the top, the social links at the
+   bottom left. Everything else (background, media) scrolls underneath them. */
+.frame-top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  pointer-events: none; /* only the links themselves take clicks */
+}
+
+.frame-top a {
+  pointer-events: auto;
+}
+
+.frame-social {
+  position: fixed;
+  left: var(--frame-left);
+  bottom: 40px;
+  z-index: 3;
+}
+
+/* Desktop: the menu's left edge lines up with the social links' left edge
+   (navbartwo.css centers it on 12.5% across); it stays at the same height */
+@media (min-width: 769px) {
+  .frame-top .sidebar {
+    left: var(--frame-left);
+    transform: translateY(-50%);
+  }
+}
+
+/* links.css pins the links to the right edge as a column; here they're a row
+   of icons */
+.frame-social .link-box {
+  position: static;
+  transform: none;
+  flex-direction: row;
+  align-items: center;
+  gap: 28px;
+  font-size: 1.1rem;
+}
+
+/* Icons only: the names are hidden from view but still read out by screen readers */
+.frame-social .link-box .label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* The page's own content (wrap it in <div className="frame-media">): it starts
+   below the pinned title, stays clear of the menu on the left and the icons at
+   the bottom, and scrolls underneath them */
+.frame-media {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 190px max(170px, 6vw) 140px;
+}
+
+/* ── MOBILE ───────────────────────────────────────────── */
+
+/* Frame pages only (html:has(main.frame-page)): the old stylesheets lock html
+   and body to the visible height with overflow hidden, which traps the page in
+   its own scroll box. Phone Safari only draws a page behind its bars when the
+   page itself scrolls and runs there, so frame pages go back to normal.
+   clip still stops sideways scrolling without creating that box.
+   What shows past the top and bottom of the background (the page's edge color)
+   is set on html by PastelFrame.js. */
+html:has(main.frame-page),
+html:has(main.frame-page) body {
+  height: auto;
+  overflow: visible;
+  overflow-x: clip;
+}
+
+@media (max-width: 768px) {
+  /* Edge to edge on phones:
+     - runway: a strip of background above the page; the page opens scrolled
+       down by exactly this much, so the background sits behind the clock and
+       the title starts just below it
+     - bleed: extra background past the bottom of the screen, behind the toolbar
+     Both are set in PastelFrame.js (RUNWAY_PX, BLEED_PX) and arrive here as
+     --frame-runway and --frame-bleed. */
+  /* The background is part of the page (absolute), not pinned to the screen
+     (fixed): Safari won't draw pinned layers behind its bars. */
+  html:has(main.frame-page) {
+    overscroll-behavior: none; /* no rubber-band past the background */
+  }
+
+  main.frame-page {
+    position: relative;
+    padding-top: var(--frame-runway);
+    min-height: calc(var(--frame-screens, 1) * 100lvh + var(--frame-runway));
+    box-sizing: border-box;
+  }
+
+  .frame-background {
+    height: calc(100% + var(--frame-bleed));
+  }
+
+  /* Pinned pieces on phones stay a little away from the very top and bottom
+     edges: Safari colors the strips behind the clock and its toolbar from
+     pinned elements touching those edges, which would cover the background */
+
+  /* Content: below the title and menu row, above the icons */
+  .frame-media {
+    padding: 150px 20px 90px;
+  }
+
+  /* Title and menu: just below the clock */
+  .frame-top {
+    top: max(12px, env(safe-area-inset-top));
+  }
+
+  /* Menu: a row under the title (navbartwo.css) */
+  .frame-nav {
+    padding: 20px 20px 0;
+  }
+
+  /* Social links: icons only, in a row, above Safari's floating toolbar */
+  .frame-social {
+    left: 20px;
+    bottom: calc(env(safe-area-inset-bottom) + 2px); /* lower = smaller number */
+  }
+
+  .frame-social .link-box {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 28px;
+    font-size: 1.1rem;
+  }
+}
+
+/* Less motion: a quick fade */
+@media (prefers-reduced-motion: reduce) {
+  .frame-content {
+    transition: opacity 0.4s ease;
+  }
+}

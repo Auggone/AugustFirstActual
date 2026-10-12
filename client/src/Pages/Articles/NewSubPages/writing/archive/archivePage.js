@@ -10,8 +10,8 @@ import mollybloom from '../../../../../assets/mollybloom.jpg';
 import augdowntown6 from '../../../../../assets/augdowntown6.JPG';
 import pianorecording from '../../../../../assets/Pianorecording.jpg';
 
-export default function ArchivePage() {
-  const boxes = [
+// Shared with the v2 archive page
+export const ARCHIVE_POSTS = [
     { slug: 'article1', className: 'box left-top',    aria: 'Left column top', category: "All Old",    src: coverImage1, alt: 'Cover Image', subtitle: "6 Degrees of Separation"  },
     { slug: 'article2', className: 'box left-bottom', aria: 'Left column bottom', category: "All Old", src: oroborus,    alt: 'Cover Image',subtitle: "The Gift Vs. The Slave" },
 
@@ -23,12 +23,14 @@ export default function ArchivePage() {
 
     { slug: 'jan06', className: 'box right-top-n', aria: 'Right column narrow top', category: ["All New", "New Music"], src: augbencam, alt: 'Cover Image', subtitle: "Jan 06: Click for samples \n Yeah happy new year. \n Last year was good, this year is better. " },
 
-  ];
+];
+
+export default function ArchivePage() {
 
   // Filtering is off here: the default filter is "All New", which would hide
   // the older posts on the one page that exists to show them.
   return (
-    <PostGrid boxes={boxes} applyFilter={false} variant="archive">
+    <PostGrid boxes={ARCHIVE_POSTS} applyFilter={false} variant="archive">
       <Link to="/writing" className="archive-back">← Writing</Link>
     </PostGrid>
   );

@@ -80,17 +80,24 @@ function FanGalleryPage() {
 }
    ===================================================================== */
 
+// The featured photo and caption, on their own (the v2 Gallery uses this inside its frame)
+export function GalleryFeatured() {
+  return (
+    <figure className="gallery-figure">
+      <img
+        className="gallery-featured"
+        src={featuredImage}
+        alt="August"
+      />
+      <figcaption className="gallery-caption">film being processed atm</figcaption>
+    </figure>
+  );
+}
+
 export default function GalleryPage() {
   return (
     <main className="gallery-page">
-      <figure className="gallery-figure">
-        <img
-          className="gallery-featured"
-          src={featuredImage}
-          alt="August"
-        />
-        <figcaption className="gallery-caption">film being processed atm</figcaption>
-      </figure>
+      <GalleryFeatured />
     </main>
   );
 }
