@@ -33,6 +33,7 @@ Current slots:
 | `home-mobile-nav` | Homepage (`NewHomePage/newhome.js`)   | Bottom of the mobile nav stack   |
 | `v2-intro`        | HomePage v2 (`HomePageV2/homev2.js`)  | Full-screen opening before the page |
 | `v2-writing-links`| Writing (`V2/WritingV2.js`)           | Above the post cards |
+| `home-sample-quotes` | Sample homepage (`HomeSample/homesample.js`) | Under the wallpaper swatches |
 
 To add a new slot, drop `<FeatureSlot name="your-slot" />` into any page.
 Any extra props on the slot are passed to the feature, so a page can share
@@ -52,3 +53,5 @@ when it's empty: `getSlotComponents("v2-intro").length > 0`.
 | `music-button` | `home-corner`, `home-mobile-nav` | "Let It All Work Out" player |
 | `intro-video`  | `v2-intro`                       | Dragon dance clip as a pastel painting; click and it melts into v2 |
 | `writing-archive-link` | `v2-writing-links`       | "Archive" link to the older posts |
+| `ouroboros-card` | `home-quotes-middle` (no longer on any page) | Ouroboros quote card from the homepage's old list of cards. The homepage now shows swatches that open into cards, so it needs reworking into one of those to come back |
+| `home-sample-quotes` | `home-sample-quotes`       | Quote cards on the sample homepage |

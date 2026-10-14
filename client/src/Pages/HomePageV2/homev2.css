@@ -1,0 +1,242 @@
+/* Pages/HomePageV2/homev2.css
+   "Wallpaper" swatches: the preset picker from evebouffard.com
+   (~/Downloads/mini-image-spec.md), at the spec's swatch size of about
+   63 × 47px. Rows of 6, starting in line with the left edge of the
+   "August First" title. Only black and white at low alpha;
+   no scaling or lifting on hover.
+   Clicked, a swatch's photo grows into its open card (.home-open, below). */
+
+.home-wallpapers {
+  display: grid;
+  grid-template-columns: repeat(6, 63px);
+  gap: 8px;
+  /* The title is centred on the page, as is .frame-media's content, so its
+     left edge is half its width (--frame-title-width, measured by
+     PastelFrame) left of the middle */
+  margin-left: calc(50% - var(--frame-title-width, 430px) / 2);
+}
+
+.home-wallpaper-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.home-wallpaper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  box-sizing: border-box;
+  padding: 0;
+  border: 2px solid rgba(0, 0, 0, 0.12);
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.04); /* while the image loads */
+}
+
+/* The photo inside the swatch: the piece that grows into the open card */
+.home-wallpaper-photo {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background-size: cover;
+  background-position: center;
+}
+
+.home-wallpaper.is-selected {
+  border-color: rgba(0, 0, 0, 0.6);
+}
+
+/* Hover: a slight lighten */
+.home-wallpaper::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transition: opacity 0.15s;
+  pointer-events: none;
+}
+
+.home-wallpaper:hover::after {
+  opacity: 1;
+}
+
+/* Titles: the music list's lettering (Pages/V2/MusicV2.css), faded the same,
+   but smaller (11.5px rather than 0.95rem) so the longest titles, "Star
+   Fishing" and "Permission" (about 60px and 54px), stay inside the 63px
+   swatch on one line. Clipped at the swatch's edges as a safeguard. */
+.home-wallpaper-title {
+  display: block;
+  font-size: 11.5px;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  opacity: 0.7;
+}
+
+.home-wallpaper:focus-visible {
+  outline: 2px solid rgba(0, 0, 0, 0.6);
+  outline-offset: 2px;
+}
+
+/* ── OPEN CARD ────────────────────────────────────────────
+   The photo and its quote: 520px tall, half photo, half quote in bold black,
+   up to 1100px wide. layout sets where the photo goes. */
+
+.home-open {
+  position: relative;
+  z-index: 1; /* above the grid as it fades */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "photo text";
+  width: 100%;
+  max-width: 1100px;
+  height: 520px;
+  margin: 0 auto;
+}
+
+.home-open.image-right {
+  grid-template-areas: "text photo";
+}
+
+/* Stacked: photo and quote each take half the height */
+.home-open.image-above,
+.home-open.image-below {
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: "photo" "text";
+}
+
+.home-open.image-below {
+  grid-template-areas: "text" "photo";
+}
+
+.home-open-photo {
+  grid-area: photo;
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+}
+
+.home-open-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.home-open-text {
+  grid-area: text;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 32px 28px;
+  overflow: hidden;
+}
+
+.home-open.image-above .home-open-text,
+.home-open.image-below .home-open-text {
+  align-items: center;
+  padding: 0 40px;
+  text-align: center;
+}
+
+/* Photo on top: the quote sits a short way under the photo rather than in
+   the middle of its half, so it isn't pushed toward the bottom */
+.home-open.image-above .home-open-text {
+  justify-content: flex-start;
+  padding-top: 40px;
+}
+
+.home-open-quote {
+  margin: 0;
+  font-size: xx-large;
+  font-weight: bold;
+  line-height: 1.25;
+  color: #000;
+}
+
+/* The back arrow is a button: no button look, and clickable even though the
+   pinned bar it sits in lets clicks through (PastelFrame.css) */
+.home-back {
+  pointer-events: auto;
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* Desktop: the social links (pinned 40px from the bottom, PastelFrame.css)
+   sit lower on this page when the screen is too short for them to clear the
+   open card (it ends 710px down: 190px of title space + 520px). They slide
+   down only as far as needed, to no closer than 12px from the bottom; on
+   taller screens they stay put. 746px = 710 + a 12px gap + the icons' row
+   (about 24px). Desktop only: on phones the card ends well above them. */
+@media (min-width: 769px) {
+  main.frame-page:has(.home-wallpapers, .home-open) .frame-social {
+    bottom: clamp(12px, calc(100vh - 746px), 40px);
+  }
+
+  /* Desktop: the open card drops down so its photo's middle lines up with
+     the back arrow (pinned at half the screen's height, navbartwo.css).
+     The card starts 190px down (.frame-media's top padding), so it moves by
+     half the screen's height, less 190px and the distance from the card's
+     top to the photo's middle. Never above where it starts. */
+  .home-open {
+    margin-top: max(0px, calc(50vh - 450px)); /* photo's middle: 260px down */
+  }
+
+  .home-open.image-above {
+    margin-top: max(0px, calc(50vh - 320px)); /* photo's middle: 130px down */
+  }
+
+  .home-open.image-below {
+    margin-top: max(0px, calc(50vh - 580px)); /* photo's middle: 390px down */
+  }
+}
+
+/* ── MOBILE ─────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  /* 6 across (418px) won't fit, so rows of 4 at the same swatch size, from
+     the left gutter */
+  .home-wallpapers {
+    grid-template-columns: repeat(4, 63px);
+    margin-left: 0;
+  }
+
+  /* The open card, phone size */
+  .home-open {
+    height: 320px;
+  }
+
+  .home-open-text {
+    padding: 16px 14px;
+  }
+
+  .home-open.image-above .home-open-text,
+  .home-open.image-below .home-open-text {
+    padding: 0 20px;
+  }
+
+  .home-open.image-above .home-open-text {
+    padding-top: 20px;
+  }
+
+  .home-open-quote {
+    font-size: medium;
+  }
+}

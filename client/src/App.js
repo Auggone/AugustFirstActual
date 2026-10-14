@@ -21,6 +21,7 @@ import WritingV2, { WritingArchiveV2 } from './Pages/V2/WritingV2';
 import MusicV2 from './Pages/V2/MusicV2';
 import PortfolioV2 from './Pages/V2/PortfolioV2';
 import PortfolioProject from './Pages/V2/PortfolioProject';
+import HomeSample from './Pages/HomeSample/homesample';
 
 // The pages used to be built at /v2/...; those links now go to the real addresses
 function FromV2() {
@@ -43,6 +44,8 @@ function App() {
         <Route path="music" element={<MusicV2 />} />
         <Route path="portfolio" element={<PortfolioV2 />} />
         <Route path="portfolio/:slug" element={<PortfolioProject />} />
+        {/* Sandbox copy of the homepage for experiments; not in the menu */}
+        <Route path="home-sample" element={<HomeSample />} />
         <Route path="v2/*" element={<FromV2 />} />
         <Route path="v2" element={<FromV2 />} />
 

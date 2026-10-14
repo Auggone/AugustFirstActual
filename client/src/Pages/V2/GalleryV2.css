@@ -14,3 +14,11 @@
   color: inherit;
   opacity: 0.7;
 }
+
+/* The swatches' rounded corners and faint edge (Pages/HomeSample/homesample.css:
+   8px radius, 2px of black at 12%). The edge is a shadow drawn just outside the
+   photo rather than a border, so the photo keeps exactly its size. */
+.frame-media .gallery-featured {
+  border-radius: 8px;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.12);
+}
