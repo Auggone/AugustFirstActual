@@ -54,6 +54,21 @@
   opacity: 0.75;
 }
 
+/* A category with nothing in it yet: shown, but not a link */
+.pf-card.is-empty,
+.pf-card.is-empty:hover {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* A category page's name, above its projects */
+.pf-category-title {
+  margin: 0 0 28px;
+  font-family: "acumin-pro", sans-serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+}
+
 /* No shaded box when a title is tapped (phones) or clicked; keyboard users
    still get an outline */
 .pf-card,
@@ -93,6 +108,11 @@
   .pf-grid {
     grid-template-columns: minmax(0, 1fr);
     gap: 32px;
+  }
+
+  .pf-category-title {
+    font-size: 1.35rem;
+    margin-bottom: 20px;
   }
 }
 

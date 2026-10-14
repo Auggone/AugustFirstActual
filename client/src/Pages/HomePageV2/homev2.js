@@ -20,38 +20,65 @@ import { AnimatePresence, MotionConfig, motion } from "framer-motion";
 import PastelFrame, { PASTEL } from "../../components/pastelFrame/PastelFrame";
 import FeatureSlot from "../../features/FeatureSlot";
 import { getSlotComponents } from "../../features/registry";
+import noGodThumb from "../../assets/thumbs/nogod.jpg";
 import fishingThumb from "../../assets/thumbs/fishingstars.jpg";
 import pinkTreeThumb from "../../assets/thumbs/pinktree.jpg";
 import mollyBloomThumb from "../../assets/thumbs/mollybloom.jpg";
 import museumCeilingThumb from "../../assets/thumbs/museumceiling.jpg";
+import noGod from "../../assets/large/nogod.jpg";
 import fishing from "../../assets/large/fishingstars.jpg";
 import pinkTree from "../../assets/large/pinktree.jpg";
 import mollyBloom from "../../assets/large/mollybloom.jpg";
 import museumCeiling from "../../assets/large/museumceiling.jpg";
 import "./homev2.css";
 
-// The swatches, in order, with what each one opens into.
+// The swatches, newest first, with what each one opens into.
 //   thumb:  the swatch (assets/thumbs, 128 × 96: about twice its size on screen)
-//   src:    the card (assets/large, 1600px wide: sharp at the card's size on
-//           retina screens, and quick enough to load for the grow animation)
+//   src:    the card (assets/large, about 1600px wide, or 1100px tall for wide
+//           photos: sharp at the card's size on retina screens, and quick
+//           enough to load for the grow animation)
 //   layout: where the photo sits in the card:
 //           "image-left", "image-right", "image-above" (text underneath)
 //           or "image-below" (text on top)
+//   quote:  optional; without one, the quote's half of the card stays empty
+//   credit: optional { text, href }: who said it, small and in italics under
+//           the quote, linking out (opens in a new tab)
 const WALLPAPERS = [
+  {
+    name: "Memory",
+    thumb: noGodThumb,
+    src: noGod,
+    layout: "image-right",
+    quote: (
+      <>
+        See that, sir. It is a relic of the Imperium. The ornament benches, built
+        for lovers, linger on, fresh and useful, while the factories and palaces
+        collapse into unremembered ruin
+      </>
+    ),
+    credit: {
+      text: "Foundation and Empire",
+      href: "https://www.goodreads.com/en/book/show/29581.Foundation_and_Empire",
+    },
+  },
   {
     name: "Star Fishing",
     thumb: fishingThumb,
     src: fishing,
-    layout: "image-left",
+    layout: "image-right",
     quote: (
       <>
         When he sacrifices himself, man for a moment is greater than God,{" "}
         <br /> for how can God, infinite and omnipotent, sacrifice himself?
       </>
     ),
+    credit: {
+      text: "The Razor's Edge",
+      href: "https://en.wikipedia.org/wiki/The_Razor%27s_Edge",
+    },
   },
   {
-    name: "Pink Tree",
+    name: "Contrastic",
     thumb: pinkTreeThumb,
     src: pinkTree,
     layout: "image-right",
@@ -61,6 +88,10 @@ const WALLPAPERS = [
         defeated. <br /><br /> Beautiful pink trees stand tall beside dead people.
       </>
     ),
+    credit: {
+      text: "The Old Man and the Sea",
+      href: "https://ca.pinterest.com/search/pins/?q=the%20old%20man%20and%20the%20sea&rs=typed",
+    },
   },
   {
     name: "Permission",
@@ -68,6 +99,10 @@ const WALLPAPERS = [
     src: mollyBloom,
     layout: "image-right",
     quote: <>To see, we must forget the name of the thing we are looking at.</>,
+    credit: {
+      text: "Claude Monet",
+      href: "https://ca.pinterest.com/search/pins/?q=claude%20monet&rs=typed",
+    },
   },
   {
     name: "Reflection",
@@ -80,6 +115,10 @@ const WALLPAPERS = [
         punishment previously reserved for prisoners.
       </>
     ),
+    credit: {
+      text: "Light Dark Light",
+      href: "https://www.youtube.com/watch?v=14NvwgZhzSI",
+    },
   },
 ];
 
@@ -123,28 +162,59 @@ function BackArrow({ onBack }) {
   );
 }
 
-// The open card: the photo (which grows out of its swatch) and its quote.
-// Takes a ref so AnimatePresence can lift it out of the layout as it leaves.
-const OpenCard = forwardRef(function OpenCard({ wallpaper }, ref) {
-  const { name, thumb, src, layout, quote } = wallpaper;
+// The open card: the photo (which grows out of its swatch) and its quote,
+// then (phones only) the back arrow underneath; on desktop the arrow is in
+// the menu's place instead. Takes a ref so AnimatePresence can lift it out of
+// the layout as it leaves.
+const OpenCard = forwardRef(function OpenCard({ wallpaper, onBack }, ref) {
+  const { name, thumb, src, layout, quote, credit } = wallpaper;
   return (
-    <motion.div ref={ref} className={`home-open ${layout}`}>
-      {/* The thumbnail shows until the larger photo has loaded over it */}
+    <motion.div ref={ref} className="home-open-wrap">
+      <div className={`home-open ${layout}`}>
+        {/* The thumbnail shows until the larger photo has loaded over it */}
+        <motion.div
+          layoutId={`home-photo-${name}`}
+          className="home-open-photo"
+          style={{ backgroundImage: `url(${thumb})`, borderRadius: 0 }}
+          transition={GROW}
+        >
+          <img src={src} alt={name} />
+        </motion.div>
+        {quote && (
+          <motion.div
+            className="home-open-text"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transition: { ...FADE, duration: 0.5, delay: 0.45 } }}
+            exit={{ opacity: 0, transition: { duration: 0.2 } }}
+          >
+            <p className="home-open-quote">{quote}</p>
+            {credit && (
+              <a
+                className="home-open-credit"
+                href={credit.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {credit.text}
+              </a>
+            )}
+          </motion.div>
+        )}
+      </div>
       <motion.div
-        layoutId={`home-photo-${name}`}
-        className="home-open-photo"
-        style={{ backgroundImage: `url(${thumb})`, borderRadius: 0 }}
-        transition={GROW}
-      >
-        <img src={src} alt={name} />
-      </motion.div>
-      <motion.div
-        className="home-open-text"
+        className="home-back-below"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, transition: { ...FADE, duration: 0.5, delay: 0.45 } }}
         exit={{ opacity: 0, transition: { duration: 0.2 } }}
       >
-        <p className="home-open-quote">{quote}</p>
+        <button
+          type="button"
+          className="sidebar-item pf-back home-back"
+          aria-label="Back to all images"
+          onClick={onBack}
+        >
+          ←
+        </button>
       </motion.div>
     </motion.div>
   );
@@ -197,7 +267,7 @@ export default function HomePageV2() {
               way at once, so the arriving one takes the top spot */}
           <AnimatePresence initial={false} mode="popLayout">
             {current ? (
-              <OpenCard key={current.name} wallpaper={current} />
+              <OpenCard key={current.name} wallpaper={current} onBack={close} />
             ) : (
               <motion.div
                 key="grid"

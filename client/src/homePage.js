@@ -1,7 +1,7 @@
 // src/homePage.js
 import { useNavigate } from "react-router-dom";
 import "./homePage.css";
-import seereal from './assets/fishingstars.jpeg';
+import seereal from './assets/seeEYES.png';
 import PostGrid from "./components/postgrid/postGrid";
 
 // Cards are listed by hand. The `slug` here must match the `slug` in the

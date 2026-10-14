@@ -1,16 +1,27 @@
 // Pages/V2/portfolioProjects.js
-// The portfolio's projects, in the order they appear on /portfolio. Each one
-// gets its own page at /portfolio/<slug> (PortfolioProject.js) showing its
-// folders of links and videos.
+// The portfolio's categories and projects. /portfolio shows the categories
+// (PortfolioV2.js); each category's page, /portfolio/<category slug>
+// (PortfolioCategory.js), shows its projects in the order listed here; each
+// project gets its own page at /portfolio/<slug> (PortfolioProject.js) showing
+// its folders of links and videos.
 import cover1 from "../../assets/coverImage1.jpg";
 import cover2 from "../../assets/coverImage2.jpg";
 import cover3 from "../../assets/coverImage3.jpg";
+
+// The categories, in the order they appear on /portfolio. A project joins one
+// by naming its slug as its `category`. A category with no projects yet shows
+// as "Coming soon" and doesn't open.
+export const CATEGORIES = [
+  { slug: "engineering-design", title: "Engineering Design" },
+  { slug: "video-editing", title: "Video Editing" },
+];
 
 // The Waterloo Versus the World videos are archived for now, not on the site:
 // src/archive/portfolio-videos (its README says how to bring them back).
 const PROJECTS = [
   {
     slug: "jerry-jiang-campaign",
+    category: "video-editing",
     title: "Jerry Jiang Campaign",
     kind: "Mixed Media",
     year: "Oct 2026 - Ongoing",
@@ -29,6 +40,7 @@ const PROJECTS = [
   // Placeholder cover photos
   {
     slug: "podcasting",
+    category: "video-editing",
     title: "Podcasting",
     kind: "Video/Audio",
     year: "May 2025 - Ongoing",
@@ -48,6 +60,7 @@ const PROJECTS = [
   },
   {
     slug: "inception-studio",
+    category: "video-editing",
     title: "Inception Studio",
     kind: "Video",
     year: "Oct 2026",

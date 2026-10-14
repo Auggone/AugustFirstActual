@@ -1,19 +1,20 @@
 // Pages/V2/PortfolioProject.js
-// One portfolio project, at /portfolio/<slug>: the frame with a back arrow in
-// place of the menu, and the project's sections of YouTube links
+// One portfolio project, at /portfolio/<slug>: the frame with a back arrow (to
+// the project's category) in place of the menu, and the project's sections of YouTube links
 // (assets/youtubeLinks.js) and videos played on the page.
 import { Link, Navigate, useParams } from "react-router-dom";
 import PastelFrame from "../../components/pastelFrame/PastelFrame";
-import PROJECTS from "./portfolioProjects";
+import PROJECTS, { CATEGORIES } from "./portfolioProjects";
 import YOUTUBE_LINKS from "../../assets/youtubeLinks";
 import { EDGE, INK } from "./PortfolioV2";
 import "./PortfolioV2.css";
 
-// Uses the menu's own classes (navbartwo.css) so the arrow sits where the menu does
-function BackArrow() {
+// Uses the menu's own classes (navbartwo.css) so the arrow sits where the menu
+// does. Shared with the category pages (PortfolioCategory.js).
+export function BackArrow({ to, label }) {
   return (
     <nav className="sidebar">
-      <Link to="/portfolio" className="sidebar-item pf-back" aria-label="Back to Portfolio">
+      <Link to={to} className="sidebar-item pf-back" aria-label={`Back to ${label}`}>
         ←
       </Link>
     </nav>
@@ -62,9 +63,13 @@ export default function PortfolioProject() {
   const { slug } = useParams();
   const project = PROJECTS.find((p) => p.slug === slug);
   if (!project) return <Navigate to="/portfolio" replace />;
+  const category = CATEGORIES.find((c) => c.slug === project.category);
+  const back = category
+    ? { to: `/portfolio/${category.slug}`, label: category.title }
+    : { to: "/portfolio", label: "Portfolio" };
 
   return (
-    <PastelFrame edge={EDGE} ink={INK} screens={1} nav={<BackArrow />}>
+    <PastelFrame edge={EDGE} ink={INK} screens={1} nav={<BackArrow {...back} />}>
       <div className="frame-media portfolio">
         {project.folders.map((f, i) => (
           <Folder key={f.title ?? i} folder={f} projectTitle={project.title} />

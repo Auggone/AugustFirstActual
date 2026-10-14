@@ -89,9 +89,14 @@
    The photo and its quote: 520px tall, half photo, half quote in bold black,
    up to 1100px wide. layout sets where the photo goes. */
 
-.home-open {
+/* The card and, on phones, the back arrow under it */
+.home-open-wrap {
   position: relative;
   z-index: 1; /* above the grid as it fades */
+}
+
+.home-open {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-areas: "photo text";
@@ -166,6 +171,27 @@
   color: #000;
 }
 
+/* Who said it: under the quote, in italics, about half the quote's size;
+   a link in the page's text color that fades on hover, like the menu */
+.home-open-credit {
+  display: block;
+  margin-top: 16px;
+  font-size: 1.1rem;
+  font-style: italic;
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.home-open-credit:hover {
+  opacity: 0.5;
+}
+
+/* The arrow under the card is for phones only (MOBILE, below) */
+.home-back-below {
+  display: none;
+}
+
 /* The back arrow is a button: no button look, and clickable even though the
    pinned bar it sits in lets clicks through (PastelFrame.css) */
 .home-back {
@@ -211,16 +237,36 @@
 /* ── MOBILE ─────────────────────────────────────────────── */
 
 @media (max-width: 768px) {
-  /* 6 across (418px) won't fit, so rows of 4 at the same swatch size, from
-     the left gutter */
+  /* 6 across (418px) won't fit, so the swatches wrap at the same size into
+     as many as fit across (4 on most phones), each row centred on the
+     screen, a short last row included */
   .home-wallpapers {
-    grid-template-columns: repeat(4, 63px);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 8px;
+    column-gap: 8px;
     margin-left: 0;
+  }
+
+  .home-wallpaper-item {
+    width: 63px;
   }
 
   /* The open card, phone size */
   .home-open {
     height: 320px;
+  }
+
+  /* The back arrow moves from under the title to under the card */
+  .frame-top .home-back {
+    display: none;
+  }
+
+  .home-back-below {
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
   }
 
   .home-open-text {
@@ -238,5 +284,10 @@
 
   .home-open-quote {
     font-size: medium;
+  }
+
+  .home-open-credit {
+    margin-top: 8px;
+    font-size: 0.75rem;
   }
 }
