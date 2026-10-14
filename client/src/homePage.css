@@ -107,15 +107,25 @@ body{
   letter-spacing: 1px;
 }
 
-/* A markdown post with no `cover` in its front matter */
+/* A post with no cover image yet: a plain solid card, the same size as one
+   with a cover, until an image is ready */
 .box-bg-empty {
-  background: repeating-linear-gradient(
-    -45deg,
-    #f2f2f2,
-    #f2f2f2 10px,
-    #ebebeb 10px,
-    #ebebeb 20px
-  );
+  background: #ececec;
+}
+
+/* A card with `fill` (homePage.js): the image keeps its own shape, centred
+   at full height, on the fill colour */
+.box-fill {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.box-bg-contain {
+  flex: none;
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
 .subtitle{ 

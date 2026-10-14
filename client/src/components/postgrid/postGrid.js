@@ -42,13 +42,15 @@ export default function PostGrid({ boxes, applyFilter = true, variant, withNav =
 
                 >
 
+                 {/* A card with `fill` shows its whole image, uncropped, on a
+                     background of that colour instead of filling the box */}
                  <Link to={`/articles/${b.slug}`}
-                    className="block-link"
-                    style={{ display: 'block', width: '100%', height: '218px', }}
+                    className={`block-link ${b.fill ? "box-fill" : ""}`}
+                    style={{ display: 'block', width: '100%', height: '218px', background: b.fill }}
                 >
                   <div
-                    className={`box-bg ${b.src ? "" : "box-bg-empty"}`}
-                    style={b.src ? { backgroundImage: `url(${b.src})` } : undefined}
+                    className={`box-bg ${b.src ? "" : "box-bg-empty"} ${b.fill ? "box-bg-contain" : ""}`}
+                    style={b.src ? { backgroundImage: `url(${b.src})`, aspectRatio: b.ratio } : undefined}
                     aria-label={b.alt}
                   />
 

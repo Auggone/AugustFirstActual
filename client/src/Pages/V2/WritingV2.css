@@ -31,3 +31,13 @@
   border-radius: 8px;
   box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.12);
 }
+
+/* A filled card: the edge goes on the card, not on the image inside it */
+.frame-media .box-bg-contain {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.frame-media .box-fill {
+  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.12);
+}
