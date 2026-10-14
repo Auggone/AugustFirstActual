@@ -25,3 +25,10 @@ yarn-error.log*
 # non-blog stray documents (kept on disk, not tracked)
 /src/assets/AlbertaCampingPass.pdf
 /src/assets/Contract157-26-Petro-Mechanics-Project-33-26-RF-Signed.pdf
+
+# archived portfolio video copies (kept on disk, not tracked; see src/archive/portfolio-videos)
+/src/archive/portfolio-videos/**/*.mp4
+/src/archive/portfolio-videos/**/*.jpg
+
+# original full-size portfolio videos (too big for GitHub; kept on disk, not tracked)
+/src/assets/videoportfolio/

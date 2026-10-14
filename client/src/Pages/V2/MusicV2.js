@@ -1,8 +1,15 @@
 // Pages/V2/MusicV2.js
 // Music, at /music. Frame shared with the other pages: components/pastelFrame.
-// Content: the existing music page (Pages/Articles/NewSubPages/music).
+// Content: a numbered list of songs under the title. (The old music page,
+// Pages/Articles/NewSubPages/music, with its "mp3 coming soon" placeholder, is
+// no longer shown; it's kept for its mp4 player.)
 import PastelFrame from "../../components/pastelFrame/PastelFrame";
-import MusicPage from "../Articles/NewSubPages/music/musicpage";
+import YOUTUBE_LINKS from "../../assets/youtubeLinks";
+import "./MusicV2.css";
+
+// The songs, in order; the list numbers them. Each name is a line in
+// assets/youtubeLinks.js. To add a song, add its link there, then its name here.
+const SONGS = ["I'm No God"];
 
 // Background colors, measured from the fire pastel (peach, gold, terracotta).
 // The first one breathes in and out.
@@ -23,7 +30,15 @@ export default function MusicV2() {
   return (
     <PastelFrame palette={PALETTE} edge={EDGE} screens={1}>
       <div className="frame-media">
-        <MusicPage />
+        <ol className="music-list">
+          {SONGS.map((name) => (
+            <li key={name}>
+              <a href={YOUTUBE_LINKS[name]} target="_blank" rel="noopener noreferrer">
+                {name}
+              </a>
+            </li>
+          ))}
+        </ol>
       </div>
     </PastelFrame>
   );

@@ -1,0 +1,43 @@
+/* Pages/V2/MusicV2.css */
+
+/* The song list: just under the title, starting at the title's left edge (as
+   wide as the title and its underline, --frame-title-width, measured by
+   PastelFrame), growing downward as songs are added. Same lettering as the
+   "mp3 coming soon" placeholder (musicpage.css). */
+.music-list {
+  width: var(--frame-title-width, 430px);
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  counter-reset: song;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+}
+
+/* "1. ", "2. " … written by the list, so adding a song numbers it */
+.music-list li {
+  counter-increment: song;
+}
+
+.music-list li::before {
+  content: counter(song) ". ";
+}
+
+/* Faded like the placeholder; the link takes the item's color */
+.music-list li {
+  opacity: 0.7;
+}
+
+.music-list a {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.music-list a:hover {
+  opacity: 0.5;
+}

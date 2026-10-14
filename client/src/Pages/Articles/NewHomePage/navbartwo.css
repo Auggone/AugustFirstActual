@@ -34,3 +34,10 @@
     transform: none;
   }
 }
+
+/* Narrow phones: five items still fit on one row */
+@media (max-width: 400px) {
+  .sidebar {
+    gap: 16px;
+  }
+}

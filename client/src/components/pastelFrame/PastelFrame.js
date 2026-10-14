@@ -96,12 +96,14 @@ function useTitleWidth(page) {
 
 export default function PastelFrame({
   palette,           // background colors; the first one breathes in and out
+                     // (leave out for a plain background in the edge color)
   edge,              // color past the top and bottom of the background
   ink = "#000",      // color of the title, menu and social icons
   inkShadow = "none", // soft shadow behind them, for dark or busy backgrounds
   screens = 3,       // how long the page is, in screens
   entered = true,    // false = background waits and the frame stays hidden (home intro)
   beforeContent,     // rendered between the background and the frame (home intro)
+  nav,               // replaces the menu, in the menu's place (portfolio projects: a back arrow)
   children,          // the page's content; scrolls under the pinned pieces
 }) {
   const page = useRef(null);
@@ -122,13 +124,15 @@ export default function PastelFrame({
         "--frame-ink-shadow": inkShadow,
       }}
     >
-      <PastelBackground
-        className="frame-background"
-        {...PASTEL}
-        {...MOTION}
-        palette={palette}
-        playing={entered}
-      />
+      {palette && (
+        <PastelBackground
+          className="frame-background"
+          {...PASTEL}
+          {...MOTION}
+          palette={palette}
+          playing={entered}
+        />
+      )}
 
       {beforeContent}
 
@@ -140,7 +144,7 @@ export default function PastelFrame({
         <div className="frame-top">
           <Header to={BASE || "/"} />
           <div className="frame-nav">
-            <NavBarTwo base={BASE} />
+            {nav ?? <NavBarTwo base={BASE} />}
           </div>
         </div>
         <div className="frame-social">

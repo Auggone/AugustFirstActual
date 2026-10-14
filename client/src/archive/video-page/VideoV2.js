@@ -1,8 +1,9 @@
-// Pages/V2/VideoV2.js
+// archive/video-page/VideoV2.js (was Pages/V2/VideoV2.js)
 // Video, at /video. Frame shared with the other pages: components/pastelFrame.
-// Content: the existing video page (Pages/Articles/NewSubPages/videos), unchanged.
+// Content: the existing video page (./videos), unchanged.
+// ARCHIVED: not on the site. See src/archive/README.md to bring it back.
 import PastelFrame from "../../components/pastelFrame/PastelFrame";
-import VideoPage from "../Articles/NewSubPages/videos/videopage";
+import VideoPage from "./videos/videopage";
 
 // Background colors: greys and blacks, mostly dark, like charcoal on paper.
 // Neutral (no blue in them). The first one breathes in and out.

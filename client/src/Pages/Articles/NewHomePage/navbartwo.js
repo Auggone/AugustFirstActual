@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./navbartwo.css";
 
-const NAV_ITEMS = ["Gallery", "Video", "Writing", "Music"];
+const NAV_ITEMS = ["Gallery", "Writing", "Music", "Portfolio"];
 
 // base: path the links start from (e.g. "/v2" sends Gallery to /v2/gallery)
 export default function NavBarTwo({ base = "" }) {
