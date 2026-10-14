@@ -1,5 +1,5 @@
 import "./links.css";
-import { FaInstagram, FaYoutube, FaTwitter, FaGoodreads, FaSoundcloud } from 'react-icons/fa';
+import { FaInstagram, FaYoutube, FaTwitter, FaGoodreads, FaSoundcloud, FaEnvelope } from 'react-icons/fa';
 import { FaLetterboxd } from 'react-icons/fa6';
 
 // Social links shown on the site, in order
@@ -8,6 +8,7 @@ const LINKS = [
     { href: "https://x.com/august_distef", Icon: FaTwitter, label: "X Account" },
     { href: "https://www.youtube.com/@AugustDiStefano", Icon: FaYoutube, label: "YouTube Channel" },
     { href: "https://boxd.it/lzmd7", Icon: FaLetterboxd, label: "Letterboxd" },
+    { href: "https://mail.google.com/mail/?view=cm&fs=1&to=augdist4@gmail.com", Icon: FaEnvelope, label: "Email", newTab: true },
 ];
 
 // Archived: put away, not shown. Move one up into LINKS to bring it back.
@@ -23,8 +24,8 @@ export default function links(){
 
         <div className = 'link-box'>
 
-        {LINKS.map(({ href, Icon, label }) => (
-            <a key={href} href={href}><Icon /> <span className="label">{label}</span> </a>
+        {LINKS.map(({ href, Icon, label, newTab }) => (
+            <a key={href} href={href} {...(newTab && { target: "_blank", rel: "noopener noreferrer" })}><Icon /> <span className="label">{label}</span> </a>
         ))}
 
         </div>
