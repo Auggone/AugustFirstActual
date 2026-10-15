@@ -28,12 +28,13 @@ function Folder({ folder, projectTitle }) {
       {folder.title && <h2 className="pf-folder-title">{folder.title}</h2>}
       {folder.links?.length > 0 && (
         <ul className="pf-links">
-          {folder.links.map((item) => {
-            const { link, text } = typeof item === "string" ? { link: item, text: item } : item;
+          {folder.links.map((item, i) => {
+            // A YouTube name from youtubeLinks.js, or { url, text } for any other site
+            const { link, url, text } = typeof item === "string" ? { link: item, text: item } : item;
             return (
-              <li key={link}>
-                <a href={YOUTUBE_LINKS[link]} target="_blank" rel="noopener noreferrer">
-                  {text}
+              <li key={url ?? link}>
+                <a href={url ?? YOUTUBE_LINKS[link]} target="_blank" rel="noopener noreferrer">
+                  {folder.numbered === false ? text : <>{i + 1}.{text && ` ${text}`}</>}
                 </a>
               </li>
             );
@@ -64,7 +65,8 @@ export default function PortfolioProject() {
   const project = PROJECTS.find((p) => p.slug === slug);
   if (!project) return <Navigate to="/portfolio" replace />;
   const category = CATEGORIES.find((c) => c.slug === project.category);
-  const back = category
+  // A category that opens straight to this project has no page of its own to go back to
+  const back = category && !category.project
     ? { to: `/portfolio/${category.slug}`, label: category.title }
     : { to: "/portfolio", label: "Portfolio" };
 

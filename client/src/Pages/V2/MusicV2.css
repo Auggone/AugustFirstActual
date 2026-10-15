@@ -32,8 +32,10 @@
   opacity: 0.7;
 }
 
+/* Song titles are bold; their numbers aren't */
 .music-list a {
   color: inherit;
+  font-weight: 700;
   text-decoration: none;
   transition: opacity 0.2s ease;
 }

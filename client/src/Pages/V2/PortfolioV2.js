@@ -25,7 +25,7 @@ export default function PortfolioV2() {
             const meta = count ? `${count} project${count === 1 ? "" : "s"}` : "Coming soon";
             // Empty categories show but don't open yet
             return count ? (
-              <Link key={c.slug} to={`/portfolio/${c.slug}`} className="pf-card">
+              <Link key={c.slug} to={`/portfolio/${c.project ?? c.slug}`} className="pf-card">
                 <h3>{c.title}</h3>
                 <p className="pf-meta">{meta}</p>
               </Link>
