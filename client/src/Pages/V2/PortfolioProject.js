@@ -21,11 +21,34 @@ export function BackArrow({ to, label }) {
   );
 }
 
-// A section: its title (if it has one), then its links and videos, all shown
+// A section: its title (if it has one), then its row of thumbnails, links and
+// videos, all shown.
 function Folder({ folder, projectTitle }) {
   return (
     <section className="pf-folder">
-      {folder.title && <h2 className="pf-folder-title">{folder.title}</h2>}
+      {folder.title && (
+        <h2 className="pf-folder-title">
+          {folder.title}
+          {folder.note && <span className="pf-folder-note"> ({folder.note})</span>}
+        </h2>
+      )}
+      {folder.thumbnails?.length > 0 && (
+        <ul className="pf-thumbs">
+          {folder.thumbnails.map(({ image, link, text }) => (
+            <li key={link}>
+              <a
+                className="pf-thumb"
+                href={YOUTUBE_LINKS[link]}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${text}, watch on YouTube`}
+                style={{ backgroundImage: `url(${image})` }}
+              />
+              <span className="pf-thumb-text" aria-hidden="true">{text}</span>
+            </li>
+          ))}
+        </ul>
+      )}
       {folder.links?.length > 0 && (
         <ul className="pf-links">
           {folder.links.map((item, i) => {

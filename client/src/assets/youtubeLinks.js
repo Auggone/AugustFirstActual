@@ -18,6 +18,7 @@ const YOUTUBE_LINKS = {
   "Podcast Ep. 3": "https://www.youtube.com/watch?v=FUYJImLnaTI&t=14s",
   "Boundless San Francisco Grant": "https://www.youtube.com/watch?v=rDRnTXmwXZI",
   "Verbal Essay Ep. 1": "https://www.youtube.com/watch?v=iZvTTAoTamU&t=4s",
+  "Maison KooKoo Interview": "https://www.youtube.com/watch?v=BIprMhug0cg",
 };
 
 export default YOUTUBE_LINKS;

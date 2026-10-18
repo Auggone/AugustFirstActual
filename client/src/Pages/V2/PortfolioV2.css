@@ -140,6 +140,14 @@
   white-space: nowrap;
 }
 
+/* Beside a section title, in brackets: the portfolio's subtitle style (.pf-meta) */
+.pf-folder-note {
+  font-style: italic;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  opacity: 0.7;
+}
+
 .pf-folder .pf-videos {
   padding: 8px 0 40px;
 }
@@ -171,6 +179,62 @@
   padding-left: 32px;
 }
 
+/* A section's thumbnails: the homepage's swatches (Pages/HomePageV2/homev2.css;
+   mini-image-spec.md), with rounded corners, a faint edge and a slight lighten
+   on hover, made bigger and in the videos' 16:9 shape (4:3 cropped the
+   lettering on the thumbnails). One row of three columns, in line with the
+   section title, each with its text beneath. The edge is white rather than
+   black, to show on black. */
+.pf-thumbs {
+  list-style: none;
+  margin: 0;
+  padding: 4px 0 24px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 240px));
+  gap: 24px;
+}
+
+.pf-thumb {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  box-sizing: border-box;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.04); /* while the image loads */
+  background-size: cover;
+  background-position: center;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pf-thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transition: opacity 0.15s;
+  pointer-events: none;
+}
+
+.pf-thumb:hover::after {
+  opacity: 1;
+}
+
+.pf-thumb:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.6);
+  outline-offset: 2px;
+}
+
+.pf-thumb-text {
+  display: block;
+  margin-top: 10px;
+  font-family: "acumin-pro", sans-serif;
+  font-size: 1rem;
+}
+
 /* The videos, one under another, full width of the content column */
 .pf-videos {
   display: flex;
@@ -190,9 +254,13 @@
     gap: 28px;
   }
 
+  /* A title and its note can be too long for a phone: they wrap. Centred,
+     over the centred thumbnails */
   .pf-folder-title {
     font-size: 1.15rem;
     padding: 16px 0;
+    white-space: normal;
+    text-align: center;
   }
 
   .pf-folder .pf-videos {
@@ -201,5 +269,25 @@
 
   .pf-folder-title + .pf-links {
     padding-left: 20px;
+  }
+
+  /* One per row, stacked, a little bigger than on desktop (280px, narrower on
+     small phones), centred on the screen with its text centred beneath */
+  .pf-thumbs {
+    grid-template-columns: minmax(0, 280px);
+    justify-content: center;
+    gap: 28px;
+  }
+
+  .pf-thumb-text {
+    margin-top: 8px;
+    font-size: 0.95rem;
+    line-height: 1.3;
+    text-align: center;
+  }
+
+  /* More room between one section's last video and the next title */
+  .pf-folder + .pf-folder {
+    margin-top: 48px;
   }
 }
