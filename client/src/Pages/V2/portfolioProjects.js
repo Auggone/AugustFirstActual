@@ -19,6 +19,14 @@ import podcast2Thumb from "../../assets/thumbs/podcast2.jpg";
 import podcast3Thumb from "../../assets/thumbs/podcast3.jpg";
 import boundlessThumb from "../../assets/thumbs/boundless.jpg";
 import verbalEssay1Thumb from "../../assets/thumbs/verbalessay1.jpg";
+import ball2 from "../../assets/woodworking/ball2.jpg";
+import piano8125 from "../../assets/woodworking/img_8125.jpg";
+import piano8226 from "../../assets/woodworking/img_8226.jpg";
+import piano8323 from "../../assets/woodworking/img_8323.jpg";
+import piano8413 from "../../assets/woodworking/img_8413.jpg";
+import piano8474 from "../../assets/woodworking/img_8474.jpg";
+import piano9340 from "../../assets/woodworking/img_9340.jpg";
+import piano9341 from "../../assets/woodworking/img_9341.jpg";
 
 // The categories, in the order they appear on /portfolio. A project joins one
 // by naming its slug as its `category`. A category with no projects yet shows
@@ -28,6 +36,7 @@ export const CATEGORIES = [
   { slug: "engineering-design", title: "Engineering Design" },
   { slug: "video-editing", title: "Video Editing" },
   { slug: "verbal-essays", title: "Verbal Essays and Lectures", project: "verbal-essays-and-lectures" },
+  { slug: "woodworking", title: "Woodworking" },
 ];
 
 // The Waterloo Versus the World videos are archived for now, not on the site:
@@ -43,6 +52,11 @@ const PROJECTS = [
     folders: [
       {
         title: "DocUnison",
+        description: [
+          "A financial tool designed for businesses with large contract, purchase order and invoice databases",
+          "Integrates with your accounting software (SAP B1, Sage, QuickBooks, etc.) to provide invoice validation against purchase orders, contracts and other documentation",
+          "Currently servicing 2 enterprise-level customers and various individuals",
+        ],
         numbered: false, // the site link stands alone, no "1."
         links: [{ url: "https://docunison.com/", text: "docunison.com" }],
         videos: [],
@@ -133,6 +147,44 @@ const PROJECTS = [
         note: "Written, Recorded and Edited",
         thumbnails: [
           { image: verbalEssay1Thumb, link: "Verbal Essay Ep. 1", text: "The Importance of First Principles" },
+        ],
+      },
+    ],
+  },
+  // Kind and year still to come. A section's `photos` ({ image, caption? },
+  // images imported from assets/) show as swatches the thumbnails' size, in 4:3,
+  // each opening the whole photo larger. Any section can have a `description`:
+  // a short paragraph under its title (left out while empty).
+  {
+    slug: "shapes",
+    category: "woodworking",
+    title: "Shapes",
+    folders: [
+      {
+        title: "Shapes",
+        description:
+          "Growing up I would spend my summers in Calgary, Alberta. My dad is a major hobbyist, and one of the things he does is carpentry, so he's got a fully kitted out wood work shop. I would spend a lot of my summers building stuff in there, mostly wooden swords, armour, bows and other weapon sort of things... not sure why that was my fixation but whatever lol. Now, when I visit him and have time to get into the workshop, I like to make random stuff. So far I have made this wooden ball, and this wooden cup. They were both cut from the same wood block and I made them on a lathe. If I ever do a GQ \"10 things I can't live without\", the ball will DEFINITELY be on my list lmao.",
+        photos: [{ image: ball2 }],
+      },
+    ],
+  },
+  {
+    slug: "piano-tech-work",
+    category: "woodworking",
+    title: "Piano Tech Work",
+    folders: [
+      {
+        title: "Piano Tech Work",
+        description:
+          "I worked at two different piano stores in Toronto. The first was called the Piano Boutique, where I was a piano technician apprentice. The second place I worked at was a store called Paul Hahn, where I spent half my time doing admin work, and the other half of my time in the workshop. All of the photos here are from Paul Hahn, I have none from the Piano Boutique. Honestly, this work is so enjoyable and really one of the most fun things that I've been fortunate enough to do! It is an awesome feeling to make something beautiful.",
+        photos: [
+          { image: piano8125 },
+          { image: piano8226 },
+          { image: piano8323 },
+          { image: piano8413 },
+          { image: piano8474 },
+          { image: piano9340 },
+          { image: piano9341 },
         ],
       },
     ],

@@ -1,7 +1,9 @@
 // Pages/V2/PortfolioProject.js
 // One portfolio project, at /portfolio/<slug>: the frame with a back arrow (to
 // the project's category) in place of the menu, and the project's sections of YouTube links
-// (assets/youtubeLinks.js) and videos played on the page.
+// (assets/youtubeLinks.js), photos (opening larger in a lightbox) and videos played on the page.
+import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Link, Navigate, useParams } from "react-router-dom";
 import PastelFrame from "../../components/pastelFrame/PastelFrame";
 import PROJECTS, { CATEGORIES } from "./portfolioProjects";
@@ -21,8 +23,101 @@ export function BackArrow({ to, label }) {
   );
 }
 
-// A section: its title (if it has one), then its row of thumbnails, links and
-// videos, all shown.
+// A photo opened over the page, whole (uncropped), on dimmed black. Arrows
+// (buttons, keyboard, or a swipe on phones) step through the section's
+// photos; Escape, the ×, or a click on the backdrop closes it. Rendered into
+// <body> so the frame's own layout can't clip or offset it.
+function Lightbox({ photos, index, setIndex, label }) {
+  const close = useCallback(() => setIndex(null), [setIndex]);
+  const step = useCallback(
+    (d) => setIndex((i) => (i + d + photos.length) % photos.length),
+    [setIndex, photos.length]
+  );
+  const touchX = useRef(null);
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === "Escape") close();
+      else if (e.key === "ArrowRight") step(1);
+      else if (e.key === "ArrowLeft") step(-1);
+    };
+    window.addEventListener("keydown", onKey);
+    // The page behind doesn't scroll while a photo is open
+    const overflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = overflow;
+    };
+  }, [close, step]);
+
+  const photo = photos[index];
+  const many = photos.length > 1;
+
+  return createPortal(
+    <div
+      className="pf-lightbox"
+      role="dialog"
+      aria-modal="true"
+      aria-label={label}
+      onClick={(e) => e.target === e.currentTarget && close()}
+      onTouchStart={(e) => (touchX.current = e.touches[0].clientX)}
+      onTouchEnd={(e) => {
+        if (touchX.current === null || !many) return;
+        const dx = e.changedTouches[0].clientX - touchX.current;
+        if (Math.abs(dx) > 40) step(dx < 0 ? 1 : -1);
+        touchX.current = null;
+      }}
+    >
+      <figure className="pf-lightbox-figure">
+        <img src={photo.image} alt={photo.caption ?? ""} />
+        {(photo.caption || many) && (
+          <figcaption>
+            {photo.caption}
+            {many && <span className="pf-lightbox-count">{index + 1} / {photos.length}</span>}
+          </figcaption>
+        )}
+      </figure>
+      <button type="button" className="pf-lightbox-close" onClick={close} aria-label="Close">×</button>
+      {many && (
+        <>
+          <button type="button" className="pf-lightbox-prev" onClick={() => step(-1)} aria-label="Previous photo">‹</button>
+          <button type="button" className="pf-lightbox-next" onClick={() => step(1)} aria-label="Next photo">›</button>
+        </>
+      )}
+    </div>,
+    document.body
+  );
+}
+
+// A section's photos: swatches the size of the thumbnails (same grid), but in
+// the swatches' 4:3 shape (mini-image-spec.md), each opening the whole photo
+// in the lightbox, with its caption (if any) beneath.
+function Photos({ photos, label }) {
+  const [open, setOpen] = useState(null);
+  return (
+    <>
+      <ul className="pf-thumbs">
+        {photos.map((p, i) => (
+          <li key={p.image}>
+            <button
+              type="button"
+              className="pf-thumb pf-photo"
+              onClick={() => setOpen(i)}
+              aria-label={`${p.caption ?? `Photo ${i + 1}`}, open larger`}
+              style={{ backgroundImage: `url(${p.image})` }}
+            />
+            {p.caption && <span className="pf-thumb-text" aria-hidden="true">{p.caption}</span>}
+          </li>
+        ))}
+      </ul>
+      {open !== null && <Lightbox photos={photos} index={open} setIndex={setOpen} label={label} />}
+    </>
+  );
+}
+
+// A section: its title (if it has one), then its row of thumbnails, photos,
+// links and videos, all shown.
 function Folder({ folder, projectTitle }) {
   return (
     <section className="pf-folder">
@@ -31,6 +126,14 @@ function Folder({ folder, projectTitle }) {
           {folder.title}
           {folder.note && <span className="pf-folder-note"> ({folder.note})</span>}
         </h2>
+      )}
+      {/* A paragraph, or a list of points (an array) shown as bullets */}
+      {Array.isArray(folder.description) ? (
+        <ul className="pf-folder-desc is-bullets">
+          {folder.description.map((point) => <li key={point}>{point}</li>)}
+        </ul>
+      ) : (
+        folder.description && <p className="pf-folder-desc">{folder.description}</p>
       )}
       {folder.thumbnails?.length > 0 && (
         <ul className="pf-thumbs">
@@ -48,6 +151,12 @@ function Folder({ folder, projectTitle }) {
             </li>
           ))}
         </ul>
+      )}
+      {folder.photos?.length > 0 && (
+        <Photos
+          photos={folder.photos}
+          label={`${projectTitle}${folder.title && folder.title !== projectTitle ? `: ${folder.title}` : ""}, photos`}
+        />
       )}
       {folder.links?.length > 0 && (
         <ul className="pf-links">

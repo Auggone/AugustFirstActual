@@ -43,6 +43,6 @@ I don’t do that anymore.
 
 One day, someone I do not know will ask me who I am.
 
-And I will tell them I am me.   
-   
+And I will tell them I am me.
 
+A
