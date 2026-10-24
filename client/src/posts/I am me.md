@@ -3,6 +3,7 @@ title: I am me
 date: 2026-10-14
 slug: i-am-me
 align: center
+draft: true
 ---
 
 ![I am me](iamme.jpg)
