@@ -2,6 +2,8 @@
 // One portfolio project, at /portfolio/<slug>: the frame with a back arrow (to
 // the project's category) in place of the menu, and the project's sections of YouTube links
 // (assets/youtubeLinks.js), photos (opening larger in a lightbox) and videos played on the page.
+// Projects in a showcase category (Creative Work) get the fuller page instead:
+// a header, a results band and big video thumbnails (interestingdesign/creative-work).
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link, Navigate, useParams } from "react-router-dom";
@@ -70,7 +72,7 @@ function Lightbox({ photos, index, setIndex, label }) {
       }}
     >
       <figure className="pf-lightbox-figure">
-        <img src={photo.image} alt={photo.caption ?? ""} />
+        <img src={photo.image} alt={photo.alt ?? photo.caption ?? ""} />
         {(photo.caption || many) && (
           <figcaption>
             {photo.caption}
@@ -192,6 +194,178 @@ function Folder({ folder, projectTitle }) {
   );
 }
 
+// ── Showcase pages (a category with `showcase`: Creative Work) ──
+
+// The id in a YouTube link (youtu.be/<id> or watch?v=<id>)
+function youtubeId(url) {
+  return url?.match(/(?:youtu\.be\/|[?&]v=)([\w-]{11})/)?.[1];
+}
+
+// A video's thumbnail at YouTube's largest size (1280 × 720), sharp at the
+// showcase's size where our own 480 × 270 copies go soft. YouTube answers a
+// video without one with a 120 × 90 grey stand-in, not an error, so that (or
+// any failure) falls back to our copy, or with none, YouTube's 480 × 360.
+function VideoImage({ url, image }) {
+  const id = youtubeId(url);
+  image ??= id && `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+  const [src, setSrc] = useState(id ? `https://i.ytimg.com/vi/${id}/maxresdefault.jpg` : image);
+  return (
+    <img
+      src={src}
+      alt=""
+      loading="lazy"
+      onLoad={(e) => e.currentTarget.naturalWidth <= 120 && setSrc(image)}
+      onError={() => setSrc(image)}
+    />
+  );
+}
+
+// A video: its thumbnail (the swatches' rounded corners and edge, with a play
+// mark and running time) and, unless left out, its text with "YouTube ↗",
+// together one link to the video in a new tab
+function Video({ image, link, text, duration, caption = true }) {
+  const url = YOUTUBE_LINKS[link];
+  return (
+    <a className="pf-video" href={url} target="_blank" rel="noopener noreferrer" aria-label={`${text}, watch on YouTube`}>
+      <span className="pf-video-frame">
+        <VideoImage url={url} image={image} />
+        <span className={`pf-pill${duration ? "" : " is-bare"}`}>
+          <svg aria-hidden="true" width="10" height="10" viewBox="0 0 10 10">
+            <path d="M2 1l7 4-7 4z" fill="currentColor" />
+          </svg>
+          {duration}
+        </span>
+      </span>
+      {caption && (
+        <span className="pf-video-row">
+          <span>{text}</span>
+          <span className="pf-video-yt">YouTube ↗</span>
+        </span>
+      )}
+    </a>
+  );
+}
+
+// Snapshots: 4:5 tiles, each opening the whole image in the lightbox, with
+// its caption (if any) beneath. One with no image yet is a plain tile showing
+// its alt text, so the layout can be seen before the images arrive.
+function Snapshots({ snapshots, label }) {
+  const [open, setOpen] = useState(null);
+  const ready = snapshots.filter((s) => s.image);
+  return (
+    <>
+      <ul className="pf-snaps">
+        {snapshots.map((s, i) => (
+          <li key={s.image ?? i} className="pf-snap">
+            {s.image ? (
+              <button
+                type="button"
+                className="pf-snap-frame"
+                onClick={() => setOpen(ready.indexOf(s))}
+                aria-label={`${s.alt}, open larger`}
+              >
+                <img src={s.image} alt="" loading="lazy" />
+              </button>
+            ) : (
+              <div className="pf-snap-frame is-empty"><span>{s.alt}</span></div>
+            )}
+            {s.caption && <span className="pf-snap-caption">{s.caption}</span>}
+          </li>
+        ))}
+      </ul>
+      {open !== null && <Lightbox photos={ready} index={open} setIndex={setOpen} label={label} />}
+    </>
+  );
+}
+
+// The top of a showcase page: a link back to the category, the title, a row
+// of facts (each shown only when set) and a short description
+function ProjectHeader({ project, category }) {
+  const facts = [
+    ["Kind", project.kind],
+    ["Dates", project.year],
+    ["My role", project.role],
+    ["Platforms", project.platforms?.join(" · ")],
+  ].filter(([, value]) => value);
+
+  return (
+    <header className="pf-header">
+      <Link to={`/portfolio/${category.slug}`} className="pf-crumb">{category.title}</Link>
+      <h1 className="pf-title">{project.title}</h1>
+      {facts.length > 0 && (
+        <dl className="pf-facts">
+          {facts.map(([label, value]) => (
+            <div key={label}>
+              <dt className="pf-label">{label}</dt>
+              <dd>{value}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
+      {project.description && <p className="pf-description">{project.description}</p>}
+    </header>
+  );
+}
+
+// The results band: big numbers between hairlines, with where they came from
+// beneath. Only shown when the project has metrics.
+function Results({ metrics, note }) {
+  if (!metrics?.length) return null;
+  if (!note && process.env.NODE_ENV !== "production") {
+    console.warn("Portfolio: a project's metrics need a metricsNote (platforms, dates, source)");
+  }
+  return (
+    <section className="pf-results" aria-labelledby="pf-results-title">
+      <h2 id="pf-results-title" className="pf-label">Results</h2>
+      <dl className="pf-metrics">
+        {metrics.map((m) => (
+          // The label comes first for screen readers; CSS puts the number on top
+          <div key={m.label} className="pf-metric">
+            <dt>{m.label}</dt>
+            <dd>{m.value}</dd>
+          </div>
+        ))}
+      </dl>
+      {note && <p className="pf-results-note">{note}</p>}
+    </section>
+  );
+}
+
+// A showcase section: what was done on it (a label), its title, then its
+// videos (three across, or one large with its text beside) and snapshots
+function ShowcaseFolder({ folder, projectTitle }) {
+  const videos = folder.thumbnails ?? [];
+  const single = videos.length === 1;
+  return (
+    <section className="pf-section">
+      {folder.note && <p className="pf-label">{folder.note}</p>}
+      {folder.title && <h2 className="pf-section-title">{folder.title}</h2>}
+      {/* With one video, the description goes beside it instead */}
+      {!single && folder.description && <p className="pf-section-desc">{folder.description}</p>}
+      {single && (
+        <div className="pf-single">
+          <Video {...videos[0]} caption={false} />
+          <div className="pf-single-text">
+            <p className="pf-single-title">{videos[0].text}</p>
+            {folder.description && <p className="pf-section-desc">{folder.description}</p>}
+            <a className="pf-single-link" href={YOUTUBE_LINKS[videos[0].link]} target="_blank" rel="noopener noreferrer">
+              Watch on YouTube ↗
+            </a>
+          </div>
+        </div>
+      )}
+      {videos.length > 1 && (
+        <div className="pf-video-grid">
+          {videos.map((v) => <Video key={v.link} {...v} />)}
+        </div>
+      )}
+      {folder.snapshots?.length > 0 && (
+        <Snapshots snapshots={folder.snapshots} label={`${projectTitle}: ${folder.title ?? "snapshots"}`} />
+      )}
+    </section>
+  );
+}
+
 export default function PortfolioProject() {
   const { slug } = useParams();
   const project = PROJECTS.find((p) => p.slug === slug);
@@ -201,13 +375,24 @@ export default function PortfolioProject() {
   const back = category && !category.project
     ? { to: `/portfolio/${category.slug}`, label: category.title }
     : { to: "/portfolio", label: "Portfolio" };
+  const showcase = category?.showcase;
 
   return (
     <PastelFrame edge={EDGE} ink={INK} screens={1} nav={<BackArrow {...back} />}>
-      <div className="frame-media portfolio">
-        {project.folders.map((f, i) => (
-          <Folder key={f.title ?? i} folder={f} projectTitle={project.title} />
-        ))}
+      <div className={`frame-media portfolio${showcase ? " is-showcase" : ""}`}>
+        {showcase && (
+          <>
+            <ProjectHeader project={project} category={category} />
+            <Results metrics={project.metrics} note={project.metricsNote} />
+          </>
+        )}
+        {project.folders.map((f, i) =>
+          showcase ? (
+            <ShowcaseFolder key={f.title ?? i} folder={f} projectTitle={project.title} />
+          ) : (
+            <Folder key={f.title ?? i} folder={f} projectTitle={project.title} />
+          )
+        )}
       </div>
     </PastelFrame>
   );

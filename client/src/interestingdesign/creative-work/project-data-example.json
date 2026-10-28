@@ -1,0 +1,48 @@
+{
+  "_note": "Example only. Match the key names and format of the real portfolio data file. Every value in [brackets] is a placeholder: leave the field out until there is a real value. Never ship bracketed text.",
+  "slug": "jerry-jiang-campaign",
+  "title": "Jerry Jiang Campaign",
+  "kind": "Mixed Media",
+  "dates": "Oct 2026 – Ongoing",
+  "cover": "[existing cover path]",
+  "role": "[Filming, editing, social]",
+  "platforms": ["[Instagram]", "[TikTok]"],
+  "description": "[Two or three sentences: what the campaign was for, who it was speaking to, and what you were responsible for.]",
+  "metrics": [
+    { "value": "[0.0M]", "label": "Video views" },
+    { "value": "[+0.0K]", "label": "Followers gained" },
+    { "value": "[0.0%]", "label": "Avg. engagement rate" },
+    { "value": "[00]", "label": "Posts published" }
+  ],
+  "metricsNote": "[Platforms] · Oct 2026 – [date] · Source: [platform analytics, as of date]",
+  "sections": [
+    {
+      "type": "videos",
+      "title": "Waterloo Versus the World",
+      "role": "Edited",
+      "thumbnails": [
+        { "image": "[existing]", "youtube": "[existing]", "caption": "Waterloo VS the World 1", "duration": "[0:00]" },
+        { "image": "[existing]", "youtube": "[existing]", "caption": "Waterloo VS the World 2", "duration": "[0:00]" },
+        { "image": "[existing]", "youtube": "[existing]", "caption": "Waterloo VS the World 3", "duration": "[0:00]" }
+      ]
+    },
+    {
+      "type": "videos",
+      "title": "Maison KooKoo Interview",
+      "role": "Filmed and Edited",
+      "description": "[One or two lines: the setup, how it was shot, what you cut it down from.]",
+      "thumbnails": [
+        { "image": "[existing]", "youtube": "[existing]", "caption": "Head Chef Interview", "duration": "[0:00]" }
+      ]
+    },
+    {
+      "type": "snapshots",
+      "title": "Campaign snapshots",
+      "role": "[role]",
+      "description": "[One line: what these are, e.g. feed posts, stories, behind-the-scenes stills.]",
+      "images": [
+        { "src": "[path]", "alt": "[describe the image]", "caption": "[optional caption or date]" }
+      ]
+    }
+  ]
+}

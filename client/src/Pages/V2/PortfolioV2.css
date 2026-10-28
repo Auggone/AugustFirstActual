@@ -497,3 +497,495 @@
     margin-top: 48px;
   }
 }
+
+/* ── Showcase project pages (PortfolioProject.js; categories with
+   `showcase`: Creative Work) ──
+   Built from interestingdesign/creative-work (README.md, reference.html).
+   Every size, gap and shade is a token here, so the page can be restyled in
+   one place. Colors are only the ink, the black, and the ink at lower
+   opacity. Secondary text stays at 0.7 opacity or more, to keep its
+   contrast on black. Thumbnails and snapshots keep the swatches' rounded
+   corners, faint edge and hover lighten (mini-image-spec.md), as everywhere
+   else on the site. */
+.portfolio.is-showcase {
+  --sc-hairline: rgba(242, 235, 221, 0.18);
+  --sc-placeholder: rgba(242, 235, 221, 0.07); /* behind an image while it loads, or with none yet */
+  --sc-badge-bg: rgba(8, 11, 15, 0.75);
+  --sc-edge: 2px solid rgba(255, 255, 255, 0.12);
+  --sc-radius: 8px;
+  --sc-muted: 0.7;
+
+  --sc-label: 0.7rem;
+  --sc-crumb: 0.85rem;
+  --sc-h1: 3.25rem;
+  --sc-h2: 1.6rem;
+  --sc-fact: 1rem;
+  --sc-desc: 1.1rem;
+  --sc-metric: 3rem;
+  --sc-metric-label: 0.85rem;
+  --sc-note: 0.8rem;
+  --sc-single-title: 1.15rem;
+  --sc-snap-caption: 0.85rem;
+
+  --sc-top: 166px; /* the page's top padding: "Creative Work" sits 24px under the site title's line */
+  --sc-gap-header: 20px;
+  --sc-gap-band: 72px;
+  --sc-band-pad: 28px;
+  --sc-metric-pad: 24px;
+  --sc-gap-section: 96px;
+  --sc-gap-title: 10px;
+  --sc-gap-grid: 18px; /* more, above a section's videos or snapshots */
+  --sc-video-gap: 24px;
+  --sc-video-text: 12px;
+  --sc-snap-gap: 24px;
+  --sc-pill-inset: 12px;
+
+  padding-top: var(--sc-top);
+  font-family: "acumin-pro", sans-serif;
+}
+
+/* The small capitals over facts, "Results" and each section (one class, so
+   all three restyle together). Full ink; the facts and "Results" dim it. */
+.pf-label {
+  margin: 0;
+  font-size: var(--sc-label);
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.is-showcase a:focus-visible,
+.is-showcase button:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.6);
+  outline-offset: 4px;
+}
+
+.is-showcase a,
+.is-showcase button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Header. header.css styles every <header> as the site title's (centred,
+   title font, spaced links); this one is left-aligned in the body font. */
+.pf-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sc-gap-header);
+  text-align: left;
+}
+
+.pf-header a {
+  font-family: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+.pf-crumb {
+  align-self: flex-start;
+  color: inherit;
+  text-decoration: none;
+  font-size: var(--sc-crumb);
+  letter-spacing: 0.04em;
+  opacity: var(--sc-muted);
+  transition: opacity 0.2s ease;
+}
+
+.pf-crumb:hover {
+  opacity: 1;
+}
+
+.pf-title {
+  margin: 0;
+  font-size: var(--sc-h1);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+.pf-facts {
+  margin: 8px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 48px;
+}
+
+.pf-facts div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pf-facts dt {
+  opacity: var(--sc-muted);
+}
+
+.pf-facts dd {
+  margin: 0;
+  font-size: var(--sc-fact);
+}
+
+.pf-description {
+  margin: 8px 0 0;
+  max-width: 768px;
+  font-size: var(--sc-desc);
+  line-height: 1.55;
+  opacity: 0.85;
+}
+
+/* Results band */
+.pf-results {
+  margin-top: var(--sc-gap-band);
+  padding: var(--sc-band-pad) 0;
+  border-top: 1px solid var(--sc-hairline);
+  border-bottom: 1px solid var(--sc-hairline);
+}
+
+.pf-results .pf-label {
+  opacity: var(--sc-muted);
+}
+
+/* One equal column per metric, however many there are */
+.pf-metrics {
+  margin: 20px 0 0;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  row-gap: 24px;
+}
+
+/* Label first in the markup, number on top on screen */
+.pf-metric {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 0 var(--sc-metric-pad);
+}
+
+.pf-metric:first-child {
+  padding-left: 0;
+}
+
+.pf-metric:last-child {
+  padding-right: 0;
+}
+
+.pf-metric + .pf-metric {
+  border-left: 1px solid var(--sc-hairline);
+}
+
+.pf-metric dd {
+  margin: 0;
+  font-size: var(--sc-metric);
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap; /* a number never breaks across lines */
+}
+
+.pf-metric dt {
+  font-size: var(--sc-metric-label);
+  opacity: var(--sc-muted);
+}
+
+.pf-results-note {
+  margin: 24px 0 0;
+  font-size: var(--sc-note);
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  opacity: var(--sc-muted);
+}
+
+/* Sections: label, title, then content */
+.pf-section {
+  margin-top: var(--sc-gap-section);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sc-gap-title);
+}
+
+.pf-section-title {
+  margin: 0;
+  font-size: var(--sc-h2);
+  font-weight: 600;
+}
+
+.pf-section-desc {
+  margin: 0;
+  max-width: 768px;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  opacity: 0.8;
+}
+
+/* Videos: three across, filling the column */
+.pf-video-grid {
+  margin-top: var(--sc-gap-grid);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--sc-video-gap);
+}
+
+.pf-video {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sc-video-text);
+  color: inherit;
+  text-decoration: none;
+}
+
+/* The swatches' look (mini-image-spec.md, as .pf-thumb above): rounded, a
+   faint edge, a slight lighten on hover, nothing moving */
+.pf-video-frame,
+.pf-snap-frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  border: var(--sc-edge);
+  border-radius: var(--sc-radius);
+  overflow: hidden;
+  background-color: var(--sc-placeholder);
+}
+
+.pf-video-frame {
+  aspect-ratio: 16 / 9;
+}
+
+.portfolio .pf-video-frame img,
+.portfolio .pf-snap-frame img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  object-fit: cover;
+}
+
+.pf-video-frame::after,
+.pf-snap-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transition: opacity 0.15s;
+  pointer-events: none;
+}
+
+.pf-video:hover .pf-video-frame::after,
+.pf-snap-frame:not(.is-empty):hover::after {
+  opacity: 1;
+}
+
+/* Play mark and running time, bottom left; the mark alone with no time */
+.pf-pill {
+  position: absolute;
+  left: var(--sc-pill-inset);
+  bottom: var(--sc-pill-inset);
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px 5px 8px;
+  border-radius: 999px;
+  background: var(--sc-badge-bg);
+  font-size: 0.72rem;
+  line-height: 1;
+}
+
+.pf-pill.is-bare {
+  padding: 6px;
+}
+
+.pf-video-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  font-size: 1rem;
+}
+
+.pf-video-yt {
+  font-size: 0.75rem;
+  opacity: var(--sc-muted);
+  white-space: nowrap;
+}
+
+/* One video: large, two thirds across, its text beside it at the bottom */
+.pf-single {
+  margin-top: var(--sc-gap-grid);
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 32px;
+  align-items: end;
+}
+
+.pf-single-text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 4px;
+}
+
+.pf-single-title {
+  margin: 0;
+  font-size: var(--sc-single-title);
+}
+
+.pf-single-link {
+  align-self: flex-start;
+  color: inherit;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  text-underline-offset: 3px;
+  transition: opacity 0.2s ease;
+}
+
+.pf-single-link:hover {
+  opacity: 0.6;
+}
+
+/* Snapshots: 4:5 tiles, four across, opening the lightbox */
+.pf-snaps {
+  list-style: none;
+  margin: var(--sc-gap-grid) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--sc-snap-gap);
+}
+
+.pf-snap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pf-snap-frame {
+  aspect-ratio: 4 / 5;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  cursor: zoom-in;
+}
+
+.pf-snap-frame:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* No image yet: its alt text, centred */
+.pf-snap-frame.is-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  font-size: 0.75rem;
+}
+
+.pf-snap-frame.is-empty span {
+  opacity: 0.6;
+}
+
+.pf-snap-caption {
+  font-size: var(--sc-snap-caption);
+  opacity: var(--sc-muted);
+}
+
+/* Tablets and small laptops: fewer across */
+@media (max-width: 1100px) {
+  .pf-video-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pf-snaps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Too narrow for big numbers in a row: two across (as on phones) */
+@media (max-width: 960px) {
+  .pf-metrics {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pf-metric {
+    padding: 0 var(--sc-metric-pad);
+  }
+
+  .pf-metric:nth-child(odd) {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .pf-metric:nth-child(even) {
+    padding-right: 0;
+  }
+}
+
+/* Phones: everything left-aligned at the full width of the column, stacked */
+@media (max-width: 768px) {
+  .portfolio.is-showcase {
+    --sc-label: 0.68rem;
+    --sc-crumb: 0.8rem;
+    --sc-h1: 2.25rem;
+    --sc-h2: 1.35rem;
+    --sc-fact: 0.95rem;
+    --sc-desc: 1rem;
+    --sc-metric: 2.1rem;
+    --sc-metric-label: 0.8rem;
+    --sc-note: 0.75rem;
+    --sc-single-title: 1.05rem;
+    --sc-snap-caption: 0.78rem;
+
+    --sc-top: 150px; /* the frame's own: the back arrow already sits between the line and the page */
+    --sc-gap-header: 16px;
+    --sc-gap-band: 48px;
+    --sc-band-pad: 24px;
+    --sc-metric-pad: 16px;
+    --sc-gap-section: 64px;
+    --sc-gap-title: 8px;
+    --sc-gap-grid: 14px;
+    --sc-video-gap: 28px;
+    --sc-video-text: 10px;
+    --sc-snap-gap: 20px 12px;
+    --sc-pill-inset: 10px;
+  }
+
+  .pf-facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 20px;
+    margin-top: 4px;
+  }
+
+  .pf-description {
+    margin-top: 4px;
+  }
+
+  .pf-results-note {
+    margin-top: 20px;
+  }
+
+  .pf-video-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pf-single {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .pf-single-text {
+    gap: 8px;
+  }
+
+  .pf-snaps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pf-snap {
+    gap: 8px;
+  }
+}

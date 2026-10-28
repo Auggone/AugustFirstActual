@@ -19,6 +19,7 @@ const YOUTUBE_LINKS = {
   "Boundless San Francisco Grant": "https://www.youtube.com/watch?v=rDRnTXmwXZI",
   "Verbal Essay Ep. 1": "https://www.youtube.com/watch?v=iZvTTAoTamU&t=4s",
   "Maison KooKoo Interview": "https://www.youtube.com/watch?v=BIprMhug0cg",
+  "It's Time to Invest in Waterloo": "https://www.youtube.com/watch?v=2Enu9Ueqkfc",
 };
 
 export default YOUTUBE_LINKS;
