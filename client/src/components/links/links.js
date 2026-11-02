@@ -4,7 +4,7 @@ import { FaLetterboxd } from 'react-icons/fa6';
 
 // Social links shown on the site, in order
 const LINKS = [
-    { href: "https://www.instagram.com/august.distefan0/", Icon: FaInstagram, label: "Instagram Account" },
+    { href: "https://www.instagram.com/augustmdistefano/", Icon: FaInstagram, label: "Instagram Account" },
     { href: "https://x.com/august_distef", Icon: FaTwitter, label: "X Account" },
     { href: "https://www.youtube.com/@AugustDiStefano", Icon: FaYoutube, label: "YouTube Channel" },
     { href: "https://boxd.it/lzmd7", Icon: FaLetterboxd, label: "Letterboxd" },

@@ -138,20 +138,20 @@ const PROJECTS = [
     slug: "podcasting",
     category: "video-editing",
     title: "Podcasting",
-    kind: "Video/Audio",
+    kind: "Video",
     year: "May 2025 - Ongoing",
     image: cover2,
-    role: "[Your role]",
-    platforms: ["[YouTube]"],
-    description: "[Two or three sentences about the podcast.]",
+    role: "Host",
+    platforms: ["YouTube", "X"],
+    description:
+      "I enjoy talking to people and learning about what they're doing and why they're doing it. I think those conversations are worth sharing with the world, too.",
     folders: [
       {
         title: "Podcasting",
-        note: "Filmed and Edited",
         thumbnails: [
-          { image: podcast1Thumb, link: "Podcast Ep. 1", text: "Ryan Martel", duration: "[0:00]" },
-          { image: podcast2Thumb, link: "Podcast Ep. 2", text: "Sydney Wambua", duration: "[0:00]" },
           { image: podcast3Thumb, link: "Podcast Ep. 3", text: "Jerry Jiang", duration: "[0:00]" },
+          { image: podcast2Thumb, link: "Podcast Ep. 2", text: "Sydney Wambua", duration: "[0:00]" },
+          { image: podcast1Thumb, link: "Podcast Ep. 1", text: "Ryan Martel", duration: "[0:00]" },
         ],
       },
     ],
@@ -163,14 +163,13 @@ const PROJECTS = [
     kind: "Video",
     year: "Oct 2026",
     image: cover3,
-    role: "[Your role]",
-    platforms: ["[YouTube]"],
-    description: "[Two or three sentences about the project.]",
+    role: "Editor",
+    platforms: ["Private"],
+    description: "Application video for a very large grant.",
     folders: [
       {
         title: "Inception Studio",
         note: "Edited",
-        description: "[One or two lines about this video.]",
         thumbnails: [
           { image: boundlessThumb, link: "Boundless San Francisco Grant", text: "Boundless San Francisco Grant", duration: "[0:00]" },
         ],

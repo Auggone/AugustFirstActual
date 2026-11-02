@@ -528,7 +528,7 @@
   --sc-snap-caption: 0.85rem;
 
   --sc-top: 166px; /* the page's top padding: "Creative Work" sits 24px under the site title's line */
-  --sc-gap-header: 20px;
+  --sc-gap-header: 16px;
   --sc-gap-band: 72px;
   --sc-band-pad: 28px;
   --sc-metric-pad: 24px;
@@ -603,7 +603,7 @@
 }
 
 .pf-facts {
-  margin: 8px 0 0;
+  margin: 0;
   display: flex;
   flex-wrap: wrap;
   gap: 20px 48px;
@@ -625,7 +625,7 @@
 }
 
 .pf-description {
-  margin: 8px 0 0;
+  margin: 0;
   max-width: 768px;
   font-size: var(--sc-desc);
   line-height: 1.55;
@@ -940,7 +940,7 @@
     --sc-snap-caption: 0.78rem;
 
     --sc-top: 150px; /* the frame's own: the back arrow already sits between the line and the page */
-    --sc-gap-header: 16px;
+    --sc-gap-header: 12px;
     --sc-gap-band: 48px;
     --sc-band-pad: 24px;
     --sc-metric-pad: 16px;
@@ -957,11 +957,6 @@
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 16px 20px;
-    margin-top: 4px;
-  }
-
-  .pf-description {
-    margin-top: 4px;
   }
 
   .pf-results-note {
