@@ -27,6 +27,15 @@ import piano8413 from "../../assets/woodworking/img_8413.jpg";
 import piano8474 from "../../assets/woodworking/img_8474.jpg";
 import piano9340 from "../../assets/woodworking/img_9340.jpg";
 import piano9341 from "../../assets/woodworking/img_9341.jpg";
+import cs1 from "../../assets/snapshots/cs1.jpg";
+import cs2 from "../../assets/snapshots/cs2.jpg";
+import cs3 from "../../assets/snapshots/cs3.jpg";
+import cs4 from "../../assets/snapshots/cs4.jpg";
+import cs5 from "../../assets/snapshots/cs5.jpg";
+import cs6 from "../../assets/snapshots/cs6.jpg";
+import cs7 from "../../assets/snapshots/cs7.jpg";
+import cs8 from "../../assets/snapshots/cs8.jpg";
+import cs9 from "../../assets/snapshots/cs9.jpg";
 
 // The categories, in the order they appear on /portfolio. A project joins one
 // by naming its slug as its `category`. A category with no projects yet shows
@@ -127,9 +136,7 @@ const PROJECTS = [
       },
       {
         title: "Campaign snapshots",
-        note: "[Role]",
-        description: "[One line: what these are, e.g. feed posts, stories, behind-the-scenes stills.]",
-        snapshots: [1, 2, 3, 4, 5, 6, 7, 8].map((n) => ({ alt: `[Post ${n}]`, caption: "[Caption or date]" })),
+        snapshots: [cs1, cs2, cs3, cs4, cs5, cs6, cs7, cs8, cs9].map((image, i) => ({ image, alt: `Campaign snapshot ${i + 1}` })),
       },
     ],
   },
